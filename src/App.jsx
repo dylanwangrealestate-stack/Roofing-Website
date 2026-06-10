@@ -6,7 +6,7 @@ import {
   ArrowUpRight, Phone, Menu, X, Bot, CalendarCheck,
   ShieldCheck, Clock, CheckCircle2, Mail, MapPin,
   Activity, RefreshCw, Settings, ChevronRight,
-  PhoneCall, FileText, BarChart3, CreditCard, Star, Zap,
+  PhoneCall, FileText, BarChart3, CreditCard, Star, Zap, MessageSquare,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -24,12 +24,12 @@ const NAV_LINKS = [
 ]
 
 const SERVICES = [
-  { icon: PhoneCall,    title: '24/7 Inbound Call Answering', text: 'Every call answered, every time. No voicemail, no missed leads, no "leave a message."' },
-  { icon: FileText,     title: 'Lead Qualification on the Call', text: 'Project type, timeline, budget range — captured and logged before you ever speak to them.' },
-  { icon: CalendarCheck,title: 'Estimate Booking', text: 'The agent drops the estimate straight into your calendar with all project details attached.' },
-  { icon: RefreshCw,    title: 'Quote Follow-Up Automation', text: 'Automated follow-up on every estimate that goes cold — without you touching anything.' },
-  { icon: Star,         title: 'After-Hours Coverage', text: 'Nearly half of all inbound calls come outside business hours. Every one gets answered.' },
-  { icon: BarChart3,    title: 'Monthly Optimization', text: 'We review call performance every month and update the agent so it keeps getting better.' },
+  { icon: Phone,        title: 'AI Voice Receptionist', text: 'Answers every inbound call 24/7, qualifies the lead, captures project details, and books the estimate directly on your calendar. No voicemail. No missed jobs.' },
+  { icon: FileText,     title: 'Quote Follow-Up Agent', text: 'Automatically follows up on every estimate that goes cold — without you touching anything. Converts dead quotes into booked jobs.' },
+  { icon: CalendarCheck,title: 'Estimate Booking', text: 'Homeowners book directly into your calendar during the call. No phone tag, no back-and-forth, no lost appointments.' },
+  { icon: Star,         title: 'Google Review Agent', text: 'Post-job review requests sent automatically via SMS. More reviews means higher Google ranking means more inbound calls.' },
+  { icon: MessageSquare,title: 'Missed Call Text-Back', text: 'Instant SMS fires to any caller you missed before they open Google and call the next contractor on the list.' },
+  { icon: BarChart3,    title: 'Lead Re-Engagement', text: 'Automatically re-contacts old leads who went cold at 3, 6, and 12 months. Dormant pipeline activated at zero ad spend.' },
 ]
 
 // ─── CountUp ──────────────────────────────────────────────────────────────────
@@ -59,152 +59,158 @@ function CountUp({ end, suffix = '', prefix = '', duration = 2000 }) {
   return <span ref={ref} className="tabular-nums">{prefix}{value}{suffix}</span>
 }
 
-// ─── SignatureAnim — Falling sparks (construction/AI) ─────────────────────────
+// ─── SignatureAnim — AI Call Pipeline (4 phases) ──────────────────────────────
 function SignatureAnim() {
-  const STATUSES = ['Incoming call…', 'Lead captured', 'Response sent', 'Estimate booked', 'Follow-up queued']
-  const [statusIdx, setStatusIdx] = useState(0)
+  const [phase, setPhase] = useState(0)
 
   useEffect(() => {
-    const id = setInterval(() => setStatusIdx(i => (i + 1) % STATUSES.length), 2400)
+    const id = setInterval(() => setPhase(p => (p + 1) % 4), 2200)
     return () => clearInterval(id)
   }, [])
 
-  const sparks = [
-    { left: '15%', delay: '0s',    dur: '1.9s', size: 6 },
-    { left: '28%', delay: '0.35s', dur: '2.2s', size: 4 },
-    { left: '44%', delay: '0.7s',  dur: '1.7s', size: 7 },
-    { left: '58%', delay: '1.0s',  dur: '2.0s', size: 5 },
-    { left: '72%', delay: '0.5s',  dur: '1.85s',size: 6 },
-    { left: '85%', delay: '1.3s',  dur: '2.1s', size: 4 },
-    { left: '36%', delay: '1.6s',  dur: '1.75s',size: 5 },
+  const phases = [
+    { step: '01', label: 'Incoming Call',   sub: 'Sarah M. · Kitchen remodel', detail: 'Ringing now…' },
+    { step: '02', label: 'Agent Answering', sub: 'AI connected · 0.8s delay',  detail: 'Qualifying lead…' },
+    { step: '03', label: 'Lead Qualified',  sub: 'Budget $18K · 8 weeks out',  detail: 'Booking estimate…' },
+    { step: '04', label: 'Estimate Booked', sub: 'Thu 10am · confirmed',        detail: 'Calendar updated ✓' },
   ]
 
   return (
-    <div className="relative h-44 rounded-3xl overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #1a0e06 0%, #120a00 50%, #1a0800 100%)' }}>
+    <div className="relative h-44 rounded-3xl overflow-hidden flex flex-col" style={{ background: '#0f172a' }}>
       <style>{`
-        @keyframes spark-fall {
-          0%   { transform: translate(-50%, -10px) rotate(0deg); opacity: 0; }
-          10%  { opacity: 1; }
-          85%  { opacity: 1; }
-          100% { transform: translate(-50%, 100px) rotate(180deg); opacity: 0; }
-        }
-        @keyframes spark-ripple {
-          0%   { transform: translateX(-50%) scale(0.4); opacity: 0.8; }
-          80%  { transform: translateX(-50%) scale(3.2); opacity: 0; }
-          100% { transform: translateX(-50%) scale(3.2); opacity: 0; }
-        }
-        @keyframes spark-fadein {
-          from { opacity: 0; transform: translateY(2px); }
+        @keyframes phase-in {
+          from { opacity: 0; transform: translateY(8px); }
           to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
 
-      {/* Atmospheric blobs */}
-      <div className="absolute top-3 left-6 w-20 h-16 rounded-full bg-primary/20 blur-xl" />
-      <div className="absolute top-2 right-8 w-14 h-14 rounded-full bg-amber-500/10 blur-xl" />
-      <div className="absolute bottom-5 left-1/2 w-28 h-10 rounded-full bg-primary/10 blur-2xl" />
-
-      {/* Source element — phone handset SVG */}
-      <svg className="absolute top-3 left-1/2 -translate-x-1/2" width="110" height="26" viewBox="0 0 110 26">
-        <rect x="8" y="8" width="94" height="10" rx="5" fill="none" stroke="#E07B39" strokeWidth="1.5" opacity="0.6" />
-        {[18, 30, 44, 58, 72, 88].map((x, i) => (
-          <circle key={i} cx={x} cy="13" r="2.5" fill="#E07B39" opacity="0.55" />
-        ))}
-        {[18, 30, 44, 58, 72, 88].map((x, i) => (
-          <line key={i} x1={x} y1="20" x2={x} y2="26" stroke="#F09A60" strokeWidth="1.5" opacity="0.4" />
-        ))}
-      </svg>
-
-      {/* Falling sparks */}
-      {sparks.map((d, i) => (
-        <div key={i} className="absolute" style={{
-          left: d.left, top: '28px',
-          width: d.size, height: d.size,
-          borderRadius: i % 3 === 0 ? '2px' : '50%',
-          background: i % 2 === 0 ? '#E07B39' : '#F09A60',
-          animation: `spark-fall ${d.dur} ${d.delay} ease-in infinite`,
-          boxShadow: `0 0 8px ${i % 2 === 0 ? '#E07B39' : '#F09A60'}`,
-          transform: 'translate(-50%, -10px)',
-        }} />
-      ))}
-
-      {/* Surface line */}
-      <svg className="absolute bottom-10 left-0" width="100%" height="10" viewBox="0 0 400 10" preserveAspectRatio="none">
-        <path d="M0,5 Q50,2 100,5 T200,5 T300,5 T400,5" fill="none" stroke="#E07B39" strokeWidth="1" opacity="0.3" />
-      </svg>
-
-      {/* Ripples */}
-      {[20, 50, 80].map((left, i) => (
-        <div key={i} className="absolute bottom-9" style={{
-          left: `${left}%`,
-          width: '16px', height: '6px',
-          borderRadius: '50%',
-          border: '1px solid #E07B39',
-          animation: `spark-ripple 2.1s ${i * 0.65}s ease-out infinite`,
-          opacity: 0.6,
-        }} />
-      ))}
-
-      {/* Header strip */}
-      <div className="absolute top-0 left-0 right-0 px-4 py-2 flex items-center justify-between">
-        <span className="font-mono text-[9px] uppercase tracking-widest text-primary/80">AI Call Pipeline</span>
-        <span className="font-mono text-[9px] text-primary/70">Live</span>
+      <div className="px-4 pt-3 pb-2 flex items-center justify-between border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+        <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: '#2563EB' }}>AI Call Pipeline</span>
+        <span className="font-mono text-[9px]" style={{ color: 'rgba(255,255,255,0.3)' }}>Live</span>
       </div>
 
-      {/* Footer strip */}
-      <div className="absolute bottom-0 left-0 right-0 px-4 py-2 flex items-center gap-2 bg-black/40">
-        <div className="w-1.5 h-1.5 rounded-full bg-primary ring-pulse flex-shrink-0" />
-        <span className="font-mono text-[9px] text-white/70" style={{ animation: 'spark-fadein 0.4s ease' }} key={statusIdx}>
-          {STATUSES[statusIdx]}
-        </span>
+      <div key={phase} className="flex-1 flex items-center px-4 gap-3" style={{ animation: 'phase-in 0.3s ease' }}>
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+          style={{ background: phase === 3 ? 'rgba(34,197,94,0.15)' : 'rgba(37,99,235,0.15)' }}>
+          <span className="font-mono text-xs font-bold" style={{ color: phase === 3 ? '#22c55e' : '#2563EB' }}>
+            {phases[phase].step}
+          </span>
+        </div>
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-wide" style={{ color: '#ffffff' }}>{phases[phase].label}</p>
+          <p className="font-body text-[11px] mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>{phases[phase].sub}</p>
+          <p className="font-mono text-[9px] mt-1" style={{ color: phase === 3 ? '#22c55e' : '#2563EB' }}>{phases[phase].detail}</p>
+        </div>
+      </div>
+
+      <div className="px-4 pb-3 flex items-center gap-1.5">
+        {phases.map((_, i) => (
+          <div key={i} className="h-1 rounded-full transition-all duration-300"
+            style={{
+              background: i === phase ? (phase === 3 ? '#22c55e' : '#2563EB') : 'rgba(255,255,255,0.12)',
+              width: i === phase ? '24px' : '6px',
+            }} />
+        ))}
       </div>
     </div>
   )
 }
 
-// ─── Lead Flow Shuffler ───────────────────────────────────────────────────────
+// ─── Lead Flow Shuffler — Animated Stat Counter ───────────────────────────────
 function LeadFlowShuffler() {
-  const cards = [
-    { label: 'Incoming Call', color: '#E07B39', icon: '📞', text: 'Sarah M. — Kitchen remodel · just now' },
-    { label: 'Lead Qualified', color: '#F09A60', icon: '✅', text: 'Budget $15K · Timeline 6 weeks · Confirmed' },
-    { label: 'Estimate Booked', color: '#22C55E', icon: '📅', text: 'Thursday 10am on your calendar' },
+  const stats = [
+    { value: 5,  suffix: '',  prefix: '',  label: 'Calls missed this week',       color: '#ef4444' },
+    { value: 47, suffix: 'K', prefix: '$', label: '1 job closed = $47K avg revenue', color: '#2563EB' },
+    { value: 15, suffix: 'x', prefix: '',  label: 'Average ROI in year one',      color: '#22c55e' },
   ]
-  const [front, setFront] = useState(0)
+  const [statIdx, setStatIdx] = useState(0)
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
-    const id = setInterval(() => setFront(f => (f + 1) % 3), 2800)
+    const id = setInterval(() => setStatIdx(i => (i + 1) % 3), 3000)
+    return () => clearInterval(id)
+  }, [])
+
+  useEffect(() => {
+    setCount(0)
+    const target = stats[statIdx].value
+    const dur = 1200
+    const start = performance.now()
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / dur)
+      setCount(Math.round(target * (1 - Math.pow(1 - t, 3))))
+      if (t < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+  }, [statIdx])
+
+  const s = stats[statIdx]
+
+  return (
+    <div className="relative h-44 rounded-3xl overflow-hidden flex flex-col items-center justify-center"
+      style={{ background: '#0f172a' }}>
+      <style>{`
+        @keyframes stat-in {
+          from { opacity: 0; transform: scale(0.9); }
+          to   { opacity: 1; transform: scale(1); }
+        }
+      `}</style>
+
+      <div key={statIdx} className="flex flex-col items-center gap-2 px-6 text-center"
+        style={{ animation: 'stat-in 0.4s ease' }}>
+        <div className="font-display font-black text-5xl tabular-nums leading-none" style={{ color: s.color }}>
+          {s.prefix}{count}{s.suffix}
+        </div>
+        <p className="font-body text-xs leading-snug max-w-[160px]" style={{ color: 'rgba(255,255,255,0.45)' }}>{s.label}</p>
+      </div>
+
+      <div className="absolute bottom-3 flex items-center gap-1.5">
+        {stats.map((st, i) => (
+          <div key={i} className="h-1 rounded-full transition-all duration-300"
+            style={{
+              background: i === statIdx ? s.color : 'rgba(255,255,255,0.12)',
+              width: i === statIdx ? '24px' : '6px',
+            }} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ─── Live Feed Ticker ─────────────────────────────────────────────────────────
+function LiveFeedTicker() {
+  const feeds = [
+    { text: 'New lead — kitchen remodel — booked in 42s', time: 'just now' },
+    { text: 'Missed call recovered — John B. · roof replacement', time: '2 min ago' },
+    { text: 'Quote follow-up sent — $34K job reactivated', time: '5 min ago' },
+    { text: 'Review requested — 5-star response received', time: '8 min ago' },
+  ]
+  const [current, setCurrent] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => setCurrent(c => (c + 1) % feeds.length), 3500)
     return () => clearInterval(id)
   }, [])
 
   return (
-    <div className="relative h-44 rounded-3xl overflow-hidden bg-surface flex items-center justify-center">
-      {cards.map((c, i) => {
-        const offset = (i - front + 3) % 3
-        const zIndex = 3 - offset
-        const scale = offset === 0 ? 1 : offset === 1 ? 0.94 : 0.88
-        const opacity = offset === 0 ? 1 : offset === 1 ? 0.65 : 0.4
-        const blur = offset === 0 ? 0 : offset === 1 ? 1 : 3
-        const translateY = offset === 0 ? 0 : offset === 1 ? 8 : 16
-        return (
-          <div key={i} className="absolute inset-4 rounded-2xl p-4 flex flex-col justify-between border border-divider"
-            style={{
-              background: `linear-gradient(135deg, ${c.color}18, ${c.color}06)`,
-              borderColor: `${c.color}25`,
-              zIndex,
-              transform: `scale(${scale}) translateY(${translateY}px)`,
-              opacity,
-              filter: `blur(${blur}px)`,
-              transition: 'all 0.55s cubic-bezier(0.25,0.46,0.45,0.94)',
-            }}>
-            <div className="flex items-center gap-2">
-              <span className="text-base">{c.icon}</span>
-              <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: c.color }}>{c.label}</span>
-            </div>
-            <p className="font-body text-xs text-muted leading-relaxed">{c.text}</p>
-          </div>
-        )
-      })}
+    <div className="hidden lg:block absolute bottom-10 right-10 w-72 z-20">
+      <style>{`
+        @keyframes feed-in {
+          from { opacity: 0; transform: translateY(8px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+      <div className="rounded-2xl p-4 shadow-2xl shadow-black/40"
+        style={{ background: 'rgba(15,23,42,0.82)', backdropFilter: 'blur(20px)', border: '1px solid rgba(37,99,235,0.18)' }}>
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-1.5 h-1.5 rounded-full bg-green-400 ring-pulse flex-shrink-0" />
+          <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.35)' }}>Live Activity</span>
+        </div>
+        <div key={current} style={{ animation: 'feed-in 0.35s ease' }}>
+          <p className="font-body text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>{feeds[current].text}</p>
+          <p className="font-mono text-[9px] mt-1.5" style={{ color: 'rgba(255,255,255,0.3)' }}>{feeds[current].time}</p>
+        </div>
+      </div>
     </div>
   )
 }
@@ -213,7 +219,7 @@ function LeadFlowShuffler() {
 function AIScheduler() {
   const [step, setStep] = useState(0)
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
-  const slots = [9, 11, 14]
+  const slots = ['9am', '11am', '2pm']
   const targetDay = 3
   const targetSlot = 0
 
@@ -227,7 +233,7 @@ function AIScheduler() {
   }, [])
 
   return (
-    <div className="relative h-44 rounded-3xl overflow-hidden bg-surface p-4 flex flex-col gap-2">
+    <div className="relative h-44 rounded-3xl overflow-hidden bg-white p-4 flex flex-col gap-2">
       <div className="flex items-center justify-between mb-1">
         <span className="font-mono text-[9px] uppercase tracking-widest text-primary/80">Estimate Scheduler</span>
         {step >= 3 && <span className="font-mono text-[9px] text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full">Booked</span>}
@@ -235,7 +241,7 @@ function AIScheduler() {
       <div className="grid grid-cols-5 gap-1 flex-1">
         {days.map((day, di) => (
           <div key={di} className="flex flex-col gap-1">
-            <span className="font-mono text-[8px] text-center text-muted uppercase">{day}</span>
+            <span className="font-mono text-[8px] text-center text-slate-500 uppercase">{day}</span>
             {slots.map((slot, si) => {
               const isTarget = di === targetDay && si === targetSlot
               const isCursor = step >= 1 && isTarget
@@ -249,7 +255,7 @@ function AIScheduler() {
                     color: isBooked ? '#0C0C0E' : '#777',
                     transform: isCursor && step === 2 ? 'scale(1.1)' : 'scale(1)',
                   }}>
-                  {isBooked ? '✓' : `${slot}am`}
+                  {isBooked ? '✓' : slot}
                 </div>
               )
             })}
@@ -268,18 +274,18 @@ function AIScheduler() {
 // ─── Missed Call Card ─────────────────────────────────────────────────────────
 function MissedCallCard() {
   return (
-    <div className="rounded-2xl bg-surface border border-divider p-6 shadow-xl shadow-black/40 max-w-sm w-full">
+    <div className="rounded-2xl bg-white border border-slate-200 p-6 shadow-xl shadow-black/40 max-w-sm w-full">
       {/* Header */}
       <div className="flex items-center gap-2.5 mb-4">
         <div className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
         <span className="font-mono text-[10px] text-red-400 uppercase tracking-wider">Missed Call</span>
-        <span className="font-mono text-[10px] text-muted ml-auto">2 mins ago</span>
+        <span className="font-mono text-[10px] text-slate-500 ml-auto">2 mins ago</span>
       </div>
       {/* Caller */}
-      <p className="font-body font-semibold text-ink text-base mb-1">Sarah M.</p>
-      <p className="font-body text-sm text-muted mb-5">Kitchen remodel · 1,200 sq ft</p>
+      <p className="font-body font-semibold text-slate-900 text-base mb-1">Sarah M.</p>
+      <p className="font-body text-sm text-slate-500 mb-5">Kitchen remodel · 1,200 sq ft</p>
       {/* Divider */}
-      <div className="h-px bg-divider mb-5" />
+      <div className="h-px bg-slate-200 mb-5" />
       {/* Resolved rows */}
       <div className="flex flex-col gap-3 mb-5">
         {['AI Agent answered', 'Lead qualified', 'Estimate booked'].map((item, i) => (
@@ -315,13 +321,13 @@ function Navbar() {
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass shadow-lg shadow-black/30' : ''}`}>
         <div className="max-w-6xl mx-auto px-6 sm:px-10 h-16 flex items-center justify-between">
-          <a href="#home" className="font-display font-bold text-xl tracking-wide text-ink lift-on-hover">
+          <a href="#home" className="font-display font-bold text-xl tracking-wide text-slate-900 lift-on-hover">
             CORNERSTONE GROWTH
           </a>
           <div className="hidden lg:flex items-center gap-8">
             {NAV_LINKS.map(l => (
               <a key={l.label} href={l.href}
-                className="font-body text-sm text-muted hover:text-ink lift-on-hover transition-colors duration-200">
+                className="font-body text-sm text-slate-500 hover:text-slate-900 lift-on-hover transition-colors duration-200">
                 {l.label}
               </a>
             ))}
@@ -331,7 +337,7 @@ function Navbar() {
               className="hidden sm:inline-flex magnetic-btn items-center gap-1.5 bg-primary text-deep text-sm font-semibold px-5 py-2.5 rounded-sm shadow-lg shadow-primary/20 tracking-wide uppercase">
               Book a Call <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.5} />
             </a>
-            <button onClick={() => setOpen(true)} className="lg:hidden p-2 text-muted hover:text-ink transition-colors" aria-label="Open menu">
+            <button onClick={() => setOpen(true)} className="lg:hidden p-2 text-slate-500 hover:text-slate-900 transition-colors" aria-label="Open menu">
               <Menu className="h-5 w-5" />
             </button>
           </div>
@@ -342,15 +348,15 @@ function Navbar() {
       {open && (
         <div className="fixed inset-0 z-[100] bg-deep/97 backdrop-blur-2xl flex flex-col p-6">
           <div className="flex items-center justify-between mb-12">
-            <span className="font-display font-bold text-lg text-ink">CORNERSTONE GROWTH</span>
-            <button onClick={() => setOpen(false)} className="p-2 text-muted hover:text-ink">
+            <span className="font-display font-bold text-lg text-white">CORNERSTONE GROWTH</span>
+            <button onClick={() => setOpen(false)} className="p-2 text-white/50 hover:text-white">
               <X className="h-5 w-5" />
             </button>
           </div>
           <nav className="flex flex-col gap-7">
             {NAV_LINKS.map(l => (
               <a key={l.label} href={l.href} onClick={() => setOpen(false)}
-                className="font-display text-3xl font-bold text-ink/80 hover:text-primary transition-colors">
+                className="font-display text-3xl font-bold text-white/80 hover:text-primary transition-colors">
                 {l.label}
               </a>
             ))}
@@ -386,7 +392,14 @@ function Hero() {
   }, [])
 
   return (
-    <section id="home" ref={ref} className="relative min-h-[100dvh] overflow-hidden bg-background">
+    <section id="home" ref={ref} className="relative min-h-[100dvh] overflow-hidden bg-slate-50">
+      {/* Hero background image */}
+      <img
+        src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1800&q=80&auto=format&fit=crop"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover brightness-[0.5]"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/50 to-blue-900/20" />
       {/* Grid bg */}
       <div className="absolute inset-0 grid-bg opacity-40" />
 
@@ -410,13 +423,13 @@ function Hero() {
           <span className="hero-eyebrow font-mono text-[10px] uppercase tracking-[0.25em] text-primary block mb-6">
             The Contractor Growth System
           </span>
-          <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-8xl text-ink tracking-tight leading-[0.95] mb-8">
+          <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-8xl text-white tracking-tight leading-[0.95] mb-8">
             <span className="hero-line-1 block">Your Phone Rings.</span>
             <span className="hero-line-2 block">You're On a Job Site.</span>
             <span className="hero-line-3 block text-primary">That Lead Just Called<br className="hidden sm:block" /> Your Competitor.</span>
           </h1>
-          <p className="hero-sub font-body text-base sm:text-lg text-muted leading-relaxed max-w-lg mb-10">
-            We build AI voice agents trained specifically for contractors — so every call gets answered, every lead gets qualified, and every estimate gets followed up. 24/7.
+          <p className="hero-sub font-body text-base sm:text-lg text-white/75 leading-relaxed max-w-lg mb-10">
+            Your phone rings. You're on a roof. That homeowner calls the next contractor on Google. Cornerstone Growth answers every call, qualifies every lead, and books every estimate — 24/7, even when you can't pick up.
           </p>
           <div className="hero-cta flex flex-col sm:flex-row gap-3 items-start">
             <a href="#book-call"
@@ -424,7 +437,7 @@ function Hero() {
               Book a Free Strategy Call <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
             </a>
           </div>
-          <p className="font-body text-sm text-muted mt-4">20 minutes. No pitch. We'll show you exactly what you're losing.</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mt-4">Built for general contractors · AI voice agents · Never miss a call</p>
         </div>
 
         {/* Right — missed call card */}
@@ -432,6 +445,7 @@ function Hero() {
           <MissedCallCard />
         </div>
       </div>
+      <LiveFeedTicker />
     </section>
   )
 }
@@ -452,42 +466,42 @@ function Features() {
   }, [])
 
   return (
-    <section id="features" ref={ref} className="py-24 sm:py-32 bg-background border-t border-divider">
+    <section id="features" ref={ref} className="py-24 sm:py-32 bg-slate-50 border-t border-slate-200">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <div className="mb-14">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Platform</p>
-          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-ink max-w-2xl">
+          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 max-w-2xl">
             What the system does <span className="font-serif italic font-medium text-primary-light">while you work.</span>
           </h2>
-          <p className="mt-4 text-muted text-base sm:text-lg max-w-xl leading-relaxed">
+          <p className="mt-4 text-slate-500 text-base sm:text-lg max-w-xl leading-relaxed">
             Three modules working in parallel — so no lead falls through the cracks while you're on site.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="feature-card rounded-2xl bg-surface border border-divider p-6 sm:p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2">Lead Flow</p>
-            <h3 className="font-display text-xl font-black text-ink mb-4 tracking-tight">From ring to booked</h3>
+          <div className="feature-card rounded-2xl bg-white border border-slate-200 p-6 sm:p-8">
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">Lead Flow</p>
+            <h3 className="font-display text-xl font-black text-slate-900 mb-4 tracking-tight">From ring to booked</h3>
             <LeadFlowShuffler />
-            <p className="mt-4 text-sm text-muted leading-relaxed">
+            <p className="mt-4 text-sm text-slate-500 leading-relaxed">
               Every call triggers an instant response sequence. The AI qualifies, responds, and books — without any human intervention.
             </p>
           </div>
 
-          <div className="feature-card rounded-2xl bg-surface border border-divider p-6 sm:p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2">AI Pipeline</p>
-            <h3 className="font-display text-xl font-black text-ink mb-4 tracking-tight">Live automation</h3>
+          <div className="feature-card rounded-2xl bg-white border border-slate-200 p-6 sm:p-8">
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">AI Pipeline</p>
+            <h3 className="font-display text-xl font-black text-slate-900 mb-4 tracking-tight">Live automation</h3>
             <SignatureAnim />
-            <p className="mt-4 text-sm text-muted leading-relaxed">
+            <p className="mt-4 text-sm text-slate-500 leading-relaxed">
               Real-time processing of every call, lead, and follow-up — running in parallel across everything in your pipeline.
             </p>
           </div>
 
-          <div className="feature-card rounded-2xl bg-surface border border-divider p-6 sm:p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2">Scheduling</p>
-            <h3 className="font-display text-xl font-black text-ink mb-4 tracking-tight">Estimates booked instantly</h3>
+          <div className="feature-card rounded-2xl bg-white border border-slate-200 p-6 sm:p-8">
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">Scheduling</p>
+            <h3 className="font-display text-xl font-black text-slate-900 mb-4 tracking-tight">Estimates booked instantly</h3>
             <AIScheduler />
-            <p className="mt-4 text-sm text-muted leading-relaxed">
+            <p className="mt-4 text-sm text-slate-500 leading-relaxed">
               The agent finds the next open slot and books the estimate in real time — no phone tag, no back-and-forth.
             </p>
           </div>
@@ -500,30 +514,18 @@ function Features() {
 // ─── Pillars ──────────────────────────────────────────────────────────────────
 function Pillars() {
   const pillars = [
-    {
-      eyebrow: 'The core problem',
-      stat: <><CountUp end={40} suffix="–50%" /></>,
-      desc: 'Of inbound calls go to voicemail at the average GC company. Every missed call is a job going to whoever answered faster.',
-    },
-    {
-      eyebrow: 'Response window',
-      stat: <><CountUp end={5} suffix=" min" /></>,
-      desc: "That's how long a homeowner waits before calling the next contractor on Google. Speed of answer is the only differentiator.",
-    },
-    {
-      eyebrow: 'Time to live',
-      stat: '5–7 days',
-      desc: 'From your first strategy call to a fully live AI voice agent running in your business. No dev work required on your end.',
-    },
+    { eyebrow: 'The core problem', stat: '60%+', desc: 'Of calls go unanswered at the average contracting business while the owner is on a job site. Every missed call is a job going to whoever picks up.' },
+    { eyebrow: 'Never call back', stat: '85%', desc: "Of homeowners who don't get an answer on the first try never call back. And 78% go with whoever responds first. Speed wins every time." },
+    { eyebrow: 'Revenue at stake', stat: '$45K–$120K', desc: 'Lost every year at the average contracting business from missed calls alone. One recovered job pays for the entire system.' },
   ]
 
   return (
-    <section className="relative py-24 sm:py-32 bg-background overflow-hidden border-t border-divider">
+    <section className="relative py-24 sm:py-32 bg-slate-50 overflow-hidden border-t border-slate-200">
       <div className="absolute inset-0 grid-bg opacity-25" />
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 rounded-full bg-primary/5 blur-3xl" />
       <div className="relative max-w-6xl mx-auto px-6 sm:px-10">
-        <div className="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-divider">
+        <div className="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-slate-200">
           {pillars.map((p, i) => (
             <div key={i} className="px-8 py-10 lg:py-0 text-center lg:text-left first:pl-0 last:pr-0">
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">{p.eyebrow}</p>
@@ -535,7 +537,7 @@ function Pillars() {
                   style={{ animation: 'pillar-sweep 3s ease-in-out infinite' }} />
               </div>
               <style>{`@keyframes pillar-sweep { 0%{transform:translateX(-100%)} 50%{transform:translateX(100%)} 100%{transform:translateX(100%)} }`}</style>
-              <p className="text-sm text-muted leading-relaxed">{p.desc}</p>
+              <p className="text-sm text-slate-500 leading-relaxed">{p.desc}</p>
             </div>
           ))}
         </div>
@@ -547,44 +549,44 @@ function Pillars() {
 // ─── Problem ──────────────────────────────────────────────────────────────────
 function Problem() {
   return (
-    <section id="problem" className="py-24 sm:py-32 bg-surface border-t border-b border-divider">
+    <section id="problem" className="py-24 sm:py-32 bg-white border-t border-b border-slate-200">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">The Reality</p>
-            <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-ink mb-8">
+            <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 mb-8">
               You Can't Answer Calls While Managing a Crew. That's Not a Flaw — It's Just the Job.
             </h2>
             <div className="flex flex-col gap-6">
-              <p className="text-base sm:text-lg text-muted leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-500 leading-relaxed">
                 You're on a slab at 7am. On a roof at 2pm. Managing a crew at 4. Your phone rings and you can't pick up. That homeowner calls the next contractor on Google.
               </p>
-              <p className="text-base sm:text-lg text-muted leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-500 leading-relaxed">
                 It's not a sales problem. It's a structural one. The contractors winning in your market aren't better than you — they just have a system that answers when they can't.
               </p>
-              <p className="text-base sm:text-lg font-semibold text-ink leading-relaxed">
+              <p className="text-base sm:text-lg font-semibold text-slate-900 leading-relaxed">
                 That's what we build.
               </p>
             </div>
           </div>
 
           {/* Visual timeline */}
-          <div className="rounded-2xl bg-background border border-divider p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-6">A typical Tuesday</p>
+          <div className="rounded-2xl bg-slate-50 border border-slate-200 p-8">
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-6">A typical Tuesday</p>
             <div className="flex flex-col gap-0">
               {[
-                { time: '7:04am', text: "You're on a slab. Phone buzzes — unknown number. Can't pick up.", color: 'text-muted' },
+                { time: '7:04am', text: "You're on a slab. Phone buzzes — unknown number. Can't pick up.", color: 'text-slate-500' },
                 { time: '7:05am', text: 'Homeowner hangs up. No voicemail. Calls the next result on Google.', color: 'text-red-400' },
                 { time: '7:06am', text: 'Your competitor picks up. Estimate scheduled for Thursday.', color: 'text-red-400' },
-                { time: '11:30am', text: 'You call back. Goes to voicemail. They never return your call.', color: 'text-muted' },
+                { time: '11:30am', text: 'You call back. Goes to voicemail. They never return your call.', color: 'text-slate-500' },
                 { time: 'With CG', text: 'Call answered instantly. Lead qualified. Estimate on your calendar.', color: 'text-primary' },
               ].map((item, i) => (
                 <div key={i}>
                   <div className="flex gap-4 py-4">
-                    <span className={`font-mono text-[10px] min-w-[52px] pt-0.5 ${i === 4 ? 'text-primary' : 'text-muted'}`}>{item.time}</span>
+                    <span className={`font-mono text-[10px] min-w-[52px] pt-0.5 ${i === 4 ? 'text-primary' : 'text-slate-500'}`}>{item.time}</span>
                     <span className={`text-sm leading-relaxed ${item.color}`}>{item.text}</span>
                   </div>
-                  {i < 4 && <div className="ml-[52px] h-px bg-divider" />}
+                  {i < 4 && <div className="ml-[52px] h-px bg-slate-200" />}
                 </div>
               ))}
             </div>
@@ -629,23 +631,23 @@ function Solution() {
   ]
 
   return (
-    <section id="solution" ref={ref} className="py-24 sm:py-32 bg-background border-t border-divider">
+    <section id="solution" ref={ref} className="py-24 sm:py-32 bg-slate-50 border-t border-slate-200">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <div className="mb-14">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">What We Build</p>
-          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-ink max-w-3xl">
+          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 max-w-3xl">
             A 24/7 Voice Agent That Runs Your Phone Like a Full-Time Receptionist.
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-divider rounded-2xl overflow-hidden border border-divider">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200">
           {cards.map((c, i) => (
-            <div key={i} className="sol-card bg-surface p-8 sm:p-10 hover:bg-background transition-colors duration-300 group">
+            <div key={i} className="sol-card bg-white p-8 sm:p-10 hover:bg-slate-50 transition-colors duration-300 group">
               <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 {c.icon}
               </div>
-              <h3 className="font-display font-black text-xl sm:text-2xl text-ink tracking-tight mb-3">{c.title}</h3>
-              <p className="text-sm text-muted leading-relaxed">{c.text}</p>
+              <h3 className="font-display font-black text-xl sm:text-2xl text-slate-900 tracking-tight mb-3">{c.title}</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">{c.text}</p>
             </div>
           ))}
         </div>
@@ -675,15 +677,17 @@ function Protocol() {
       num: '01',
       eyebrow: 'Discovery',
       title: 'We learn your business',
-      body: "Your call flow, your project types, your service area, and how you handle leads. One 20-minute call. That's it.",
-      bullets: ['Service area and project types', 'How you qualify leads today', 'Your calendar and booking process'],
+      body: "Your call flow, your project types, your service area, and how you handle leads. One call. That's it.",
+      bullets: ['Service area, project types, and crew size', 'How you qualify and follow up on leads today', 'Calendar setup — Jobber, BuilderTrend, or Google Calendar'],
+      img: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&q=80&auto=format&fit=crop',
     },
     {
       num: '02',
       eyebrow: 'Build',
       title: 'We build and train the agent',
-      body: 'Trained on your business — your voice, your tone, your process. Done in 5–7 business days. Not a generic template.',
+      body: 'Trained on your business — your voice, your tone, your process. Done fast. Not a generic template.',
       bullets: ['Custom response scripts in your voice', 'Trained on your specific project types', 'Integrated with your calendar'],
+      img: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=900&q=80&auto=format&fit=crop',
     },
     {
       num: '03',
@@ -691,6 +695,7 @@ function Protocol() {
       title: 'You test it yourself',
       body: "Call the number. Pretend you're a homeowner. Tell us what to change. We don't go live until you're completely satisfied.",
       bullets: ['You call it yourself before launch', 'Unlimited revisions pre-launch', "We don't flip the switch until you approve"],
+      img: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=80&auto=format&fit=crop',
     },
     {
       num: '04',
@@ -702,11 +707,11 @@ function Protocol() {
   ]
 
   return (
-    <section id="process" className="relative bg-background border-t border-divider">
+    <section id="process" className="relative bg-slate-50 border-t border-slate-200">
       <div className="max-w-6xl mx-auto px-6 sm:px-10 pt-24 pb-8">
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">The Process</p>
-        <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-ink max-w-2xl">
-          Live in 5–7 Days. Zero Tech Knowledge Required.
+        <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 max-w-2xl">
+          Fast Turnaround. Zero Tech Knowledge Required.
         </h2>
       </div>
 
@@ -715,26 +720,42 @@ function Protocol() {
           <div key={i} ref={el => cardsRef.current[i] = el}
             className="sticky top-24 mx-auto max-w-6xl px-6 sm:px-10 pb-8"
             style={{ zIndex: i + 1 }}>
-            <div className="rounded-2xl bg-surface border border-divider overflow-hidden shadow-2xl shadow-black/30">
+            <div className="rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-2xl shadow-black/30">
               <div className="p-8 sm:p-12 lg:p-14">
                 <div className="flex items-center gap-4 mb-8">
                   <span className="font-display font-black text-5xl gradient-text leading-none">{s.num}</span>
-                  <div className="h-px flex-1 bg-divider" />
+                  <div className="h-px flex-1 bg-slate-200" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">{s.eyebrow}</span>
                 </div>
                 <div className="grid lg:grid-cols-2 gap-8 items-start">
                   <div>
-                    <h3 className="font-display font-black text-2xl sm:text-3xl text-ink tracking-tight mb-4">{s.title}</h3>
-                    <p className="text-muted leading-relaxed text-base sm:text-lg">{s.body}</p>
+                    <h3 className="font-display font-black text-2xl sm:text-3xl text-slate-900 tracking-tight mb-4">{s.title}</h3>
+                    <p className="text-slate-500 leading-relaxed text-base sm:text-lg">{s.body}</p>
                   </div>
-                  <ul className="flex flex-col gap-3">
-                    {s.bullets.map((b, j) => (
-                      <li key={j} className="flex items-start gap-3">
-                        <ChevronRight className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                        <span className="text-sm text-muted leading-relaxed">{b}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {s.img ? (
+                    <div>
+                      <div className="rounded-xl overflow-hidden h-36 mb-4">
+                        <img src={s.img} alt="" className="w-full h-full object-cover" style={{ filter: 'brightness(0.75)' }} />
+                      </div>
+                      <ul className="flex flex-col gap-3">
+                        {s.bullets.map((b, j) => (
+                          <li key={j} className="flex items-start gap-3">
+                            <ChevronRight className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
+                            <span className="text-sm text-slate-500 leading-relaxed">{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <ul className="flex flex-col gap-3">
+                      {s.bullets.map((b, j) => (
+                        <li key={j} className="flex items-start gap-3">
+                          <ChevronRight className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
+                          <span className="text-sm text-slate-500 leading-relaxed">{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>
@@ -760,17 +781,6 @@ function ServicesGrid() {
     return () => ctx.revert()
   }, [])
 
-  const included = [
-    { icon: PhoneCall,    title: '24/7 Inbound Call Answering', text: 'Every call answered, every time. No voicemail.' },
-    { icon: FileText,     title: 'Lead Qualification',          text: 'Project type, timeline, budget — captured before you ever speak to them.' },
-    { icon: CalendarCheck,title: 'Estimate Booking',            text: 'Drops straight into your calendar with all the details.' },
-    { icon: RefreshCw,    title: 'Quote Follow-Up',             text: 'Automated follow-up on every estimate that goes cold.' },
-    { icon: Star,         title: 'After-Hours Coverage',        text: 'Nearly half of all inbound calls come after hours. All answered.' },
-    { icon: Zap,          title: 'SMS Confirmation',            text: 'Homeowner gets a text confirmation after booking. Automatic.' },
-    { icon: Settings,     title: 'Monthly Optimization',        text: 'We review call performance and update the agent every month.' },
-    { icon: CreditCard,   title: 'Integrates With Your Setup',  text: 'Works with Jobber, BuilderTrend, Google Calendar, and more.' },
-  ]
-
   return (
     <section id="included" ref={ref} className="bg-deep text-white py-24 sm:py-32 border-t border-white/5">
       <div className="max-w-6xl mx-auto px-6 sm:px-10 mb-14">
@@ -787,8 +797,8 @@ function ServicesGrid() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04] rounded-2xl overflow-hidden border border-white/[0.06]">
-          {included.map((s, i) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04] rounded-2xl overflow-hidden border border-white/[0.06]">
+          {SERVICES.map((s, i) => {
             const Icon = s.icon
             return (
               <div key={i} className="svc-tile bg-deep p-7 hover:bg-white/[0.03] transition-colors duration-300 group">
@@ -828,7 +838,7 @@ function TrustSignals() {
   const badges = [
     {
       icon: Clock,
-      title: '20-minute strategy call',
+      title: 'Book a strategy call',
       sub: "We'll look at your call volume, your current setup, and tell you honestly if this makes sense for you. If it doesn't, we'll say that.",
     },
     {
@@ -838,31 +848,31 @@ function TrustSignals() {
     },
     {
       icon: Zap,
-      title: 'Live in 5–7 days',
-      sub: "From your first call to a fully deployed agent running in your business. No IT team, no dev work, no downtime.",
+      title: 'Fast turnaround',
+      sub: "From strategy call to a fully deployed agent running in your business. Timeline confirmed on your call. No IT team, no dev work.",
     },
   ]
 
   return (
-    <section ref={ref} className="py-24 sm:py-32 bg-background border-t border-divider">
+    <section ref={ref} className="py-24 sm:py-32 bg-slate-50 border-t border-slate-200">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <div className="text-center mb-14">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Why Cornerstone Growth</p>
-          <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight text-ink">
-            Built for Contractors. <span className="font-serif italic font-medium text-muted">Not for everyone.</span>
+          <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight text-slate-900">
+            Built for Contractors. <span className="font-serif italic font-medium text-slate-500">Not for everyone.</span>
           </h2>
         </div>
         <div className="grid lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
           {badges.map((b, i) => {
             const Icon = b.icon
             return (
-              <div key={i} className="trust-badge rounded-2xl bg-surface border border-divider p-8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-300"
+              <div key={i} className="trust-badge rounded-2xl bg-white border border-slate-200 p-8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-300"
                 style={{ opacity: 0, transform: 'translateY(24px)' }}>
                 <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
                   <Icon className="h-5 w-5 text-primary" strokeWidth={2.2} />
                 </div>
-                <h3 className="font-display font-black text-xl text-ink tracking-tight mb-3">{b.title}</h3>
-                <p className="text-sm text-muted leading-relaxed">{b.sub}</p>
+                <h3 className="font-display font-black text-xl text-slate-900 tracking-tight mb-3">{b.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{b.sub}</p>
               </div>
             )
           })}
@@ -899,15 +909,15 @@ function FAQ() {
   ]
 
   return (
-    <section id="faq" className="py-24 sm:py-32 bg-surface border-t border-divider">
+    <section id="faq" className="py-24 sm:py-32 bg-white border-t border-slate-200">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Questions</p>
-            <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight text-ink mb-6">
+            <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight text-slate-900 mb-6">
               Things Contractors Want to Know First.
             </h2>
-            <p className="text-muted leading-relaxed mb-8">
+            <p className="text-slate-500 leading-relaxed mb-8">
               No sales deck, no case studies from industries you don't work in. Just honest answers.
             </p>
             <a href="#book-call"
@@ -915,14 +925,14 @@ function FAQ() {
               Still have questions? Book a call <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>
-          <div className="flex flex-col divide-y divide-divider border border-divider rounded-2xl overflow-hidden">
+          <div className="flex flex-col divide-y divide-slate-200 border border-slate-200 rounded-2xl overflow-hidden">
             {items.map((item, i) => (
               <div key={i}>
                 <button
                   onClick={() => setOpen(open === i ? null : i)}
-                  className="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-background transition-colors duration-200">
-                  <span className="font-body font-semibold text-ink text-sm leading-relaxed">{item.q}</span>
-                  <div className={`w-5 h-5 rounded-sm flex items-center justify-center flex-shrink-0 border transition-all duration-200 ${open === i ? 'bg-primary border-primary' : 'border-divider'}`}>
+                  className="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-slate-50 transition-colors duration-200">
+                  <span className="font-body font-semibold text-slate-900 text-sm leading-relaxed">{item.q}</span>
+                  <div className={`w-5 h-5 rounded-sm flex items-center justify-center flex-shrink-0 border transition-all duration-200 ${open === i ? 'bg-primary border-primary' : 'border-slate-200'}`}>
                     <span className="block w-2.5 h-px bg-current relative"
                       style={{ color: open === i ? '#0C0C0E' : '#777' }}>
                       <span className={`absolute inset-0 w-px h-2.5 bg-current left-1/2 -translate-x-1/2 -top-[5px] transition-transform duration-200 ${open === i ? 'scale-y-0' : 'scale-y-100'}`} />
@@ -930,7 +940,7 @@ function FAQ() {
                   </div>
                 </button>
                 <div className={`overflow-hidden transition-all duration-300 ${open === i ? 'max-h-60' : 'max-h-0'}`}>
-                  <p className="px-6 pb-6 text-sm text-muted leading-relaxed">{item.a}</p>
+                  <p className="px-6 pb-6 text-sm text-slate-500 leading-relaxed">{item.a}</p>
                 </div>
               </div>
             ))}
@@ -944,22 +954,52 @@ function FAQ() {
 // ─── ContactForm / Final CTA ──────────────────────────────────────────────────
 function ContactForm() {
   const [status, setStatus] = useState('idle')
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
     setStatus('sending')
-    setTimeout(() => setStatus('sent'), 1200)
+    const form = e.target
+    const data = {
+      access_key: '17e0e9b9-2f99-4dee-bb85-aa2c28c4b786',
+      subject: 'New Lead — Cornerstone Growth',
+      from_name: 'Cornerstone Growth Website',
+      name: form.name.value,
+      email: form.email.value,
+      phone: form.phone.value,
+      company: form.company.value,
+      revenue: form.revenue.value,
+      projectValue: form.projectValue?.value || '',
+      services: Array.from(form.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value).join(', '),
+      message: form.message.value,
+    }
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      if (res.ok) {
+        setStatus('sent')
+        setTimeout(() => {
+          window.open('https://calendly.com/dylanwang-realestate/30min', '_blank')
+        }, 800)
+      } else {
+        setStatus('idle')
+      }
+    } catch {
+      setStatus('idle')
+    }
   }
 
   return (
-    <section id="book-call" className="py-24 sm:py-32 lg:py-40 bg-background border-t border-divider">
+    <section id="book-call" className="py-24 sm:py-32 lg:py-40 bg-slate-50 border-t border-slate-200">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         {/* CTA Header */}
         <div className="text-center mb-16 max-w-2xl mx-auto">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">The Next Step</p>
-          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-ink mb-6">
-            Have a 20-Minute Call That's Actually Worth Your Time.
+          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 mb-6">
+            Book a Call That's Actually Worth Your Time.
           </h2>
-          <p className="text-muted text-base sm:text-lg leading-relaxed">
+          <p className="text-slate-500 text-base sm:text-lg leading-relaxed">
             We'll look at your current setup, how you're handling inbound leads, and where you're losing jobs. Then we'll tell you honestly whether this is a fit.
           </p>
         </div>
@@ -967,15 +1007,15 @@ function ContactForm() {
         {/* Trust row */}
         <div className="flex flex-col sm:flex-row justify-center gap-6 sm:gap-10 mb-16">
           {[
-            { icon: '🕐', strong: '20 minutes', label: '— working session, not a pitch' },
+            { icon: '🕐', strong: 'Book a call', label: '— working session, not a pitch' },
             { icon: '✓', strong: 'You own everything', label: '— your number, your data, your agent' },
-            { icon: '⚡', strong: 'Live in 5–7 days', label: '— from call to deployed' },
+            { icon: '⚡', strong: 'Fast turnaround', label: '— timeline confirmed on your call' },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-sm bg-surface border border-divider flex items-center justify-center text-base flex-shrink-0">
+              <div className="w-9 h-9 rounded-sm bg-white border border-slate-200 flex items-center justify-center text-base flex-shrink-0">
                 {item.icon}
               </div>
-              <span className="text-sm text-muted"><span className="text-ink font-semibold">{item.strong}</span>{item.label}</span>
+              <span className="text-sm text-slate-500"><span className="text-slate-900 font-semibold">{item.strong}</span>{item.label}</span>
             </div>
           ))}
         </div>
@@ -985,7 +1025,8 @@ function ContactForm() {
           <div className="lg:col-span-5">
             <div className="flex flex-col gap-4 mb-10">
               {[
-                { icon: Mail,   label: 'Email',    value: 'hello@cornerstonegrowth.ai', href: 'mailto:hello@cornerstonegrowth.ai' },
+                { icon: Phone,  label: 'Phone',    value: '(407) 743-0525', href: 'tel:4077430525' },
+                { icon: Mail,   label: 'Email',    value: 'dylanwang.realestate@gmail.com', href: 'mailto:dylanwang.realestate@gmail.com' },
                 { icon: MapPin, label: 'Location', value: 'Remote — serving contractors nationwide', href: null },
               ].map((c, i) => {
                 const Icon = c.icon
@@ -995,37 +1036,37 @@ function ContactForm() {
                       <Icon className="h-4 w-4 text-primary" strokeWidth={2.2} />
                     </div>
                     <div>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted">{c.label}</p>
-                      <p className="text-sm font-medium text-ink mt-0.5">{c.value}</p>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500">{c.label}</p>
+                      <p className="text-sm font-medium text-slate-900 mt-0.5">{c.value}</p>
                     </div>
                   </div>
                 )
                 return c.href ? <a key={i} href={c.href} className="lift-on-hover">{inner}</a> : <div key={i}>{inner}</div>
               })}
             </div>
-            <div className="p-5 rounded-2xl border border-divider bg-surface">
+            <div className="p-5 rounded-2xl border border-slate-200 bg-white">
               <div className="flex items-center gap-2 mb-2">
                 <ShieldCheck className="h-4 w-4 text-primary" strokeWidth={2.2} />
-                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted">No pressure</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500">No pressure</span>
               </div>
-              <p className="text-xs text-muted leading-relaxed">No contracts to sign on the call. No commitment. Just the conversation.</p>
+              <p className="text-xs text-slate-500 leading-relaxed">No contracts to sign on the call. No commitment. Just the conversation.</p>
             </div>
           </div>
 
           {/* Right — form */}
           <div className="lg:col-span-7">
             {status === 'sent' ? (
-              <div className="rounded-2xl bg-surface border border-divider p-12 flex flex-col items-center justify-center text-center min-h-[440px]">
+              <div className="rounded-2xl bg-white border border-slate-200 p-12 flex flex-col items-center justify-center text-center min-h-[440px]">
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
                   <CheckCircle2 className="h-8 w-8 text-primary" strokeWidth={2} />
                 </div>
-                <h3 className="font-display font-black text-2xl text-ink mb-3 tracking-tight">We'll be in touch.</h3>
-                <p className="text-muted max-w-sm leading-relaxed text-sm">
+                <h3 className="font-display font-black text-2xl text-slate-900 mb-3 tracking-tight">We'll be in touch.</h3>
+                <p className="text-slate-500 max-w-sm leading-relaxed text-sm">
                   Expect an email within one business day to schedule your free strategy call.
                 </p>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="rounded-2xl bg-surface border border-divider p-8 sm:p-10">
+              <form onSubmit={onSubmit} className="rounded-2xl bg-white border border-slate-200 p-8 sm:p-10">
                 <div className="grid sm:grid-cols-2 gap-5 mb-5">
                   {[
                     { id: 'name',    label: 'Full Name',      type: 'text',  placeholder: 'John Smith' },
@@ -1034,26 +1075,72 @@ function ContactForm() {
                     { id: 'company', label: 'Company Name',   type: 'text',  placeholder: 'Smith General Contracting' },
                   ].map(f => (
                     <div key={f.id}>
-                      <label htmlFor={f.id} className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">{f.label}</label>
-                      <input id={f.id} type={f.type} placeholder={f.placeholder} required
-                        className="w-full bg-background border border-divider rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all" />
+                      <label htmlFor={f.id} className="block font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500 mb-2">{f.label}</label>
+                      <input id={f.id} name={f.id} type={f.type} placeholder={f.placeholder} required
+                        className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-500/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all" />
                     </div>
                   ))}
                 </div>
 
+                <div className="mb-5">
+                  <label htmlFor="revenue" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500 mb-2">Monthly Revenue</label>
+                  <select id="revenue" name="revenue" required
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all">
+                    <option value="">Select your range</option>
+                    <option value="under-30k">Under $30K/month</option>
+                    <option value="30k-80k">$30K–$80K/month</option>
+                    <option value="80k-170k">$80K–$170K/month</option>
+                    <option value="170k-plus">$170K+/month</option>
+                  </select>
+                </div>
+
+                <div className="sm:col-span-2 mb-5">
+                  <label className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-3">Services Interested In</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {[
+                      'AI Voice Receptionist',
+                      'Quote Follow-Up Agent',
+                      'Estimate Booking',
+                      'Google Review Agent',
+                      'Missed Call Text-Back',
+                      'Lead Re-Engagement',
+                    ].map((service) => (
+                      <label key={service} className="flex items-center gap-3 p-3 rounded-xl border border-divider bg-background cursor-pointer hover:border-primary/40 transition-colors">
+                        <input type="checkbox" name="services" value={service}
+                          className="w-4 h-4 rounded accent-primary flex-shrink-0" />
+                        <span className="text-sm text-ink">{service}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="sm:col-span-2 mb-5">
+                  <label htmlFor="projectValue" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">Average Project Value</label>
+                  <select id="projectValue" name="projectValue"
+                    className="w-full bg-background border border-divider rounded-xl px-4 py-3 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/60 transition-all">
+                    <option value="">Select your average job size</option>
+                    <option value="25k-50k">$25K – $50K</option>
+                    <option value="50k-75k">$50K – $75K</option>
+                    <option value="75k-100k">$75K – $100K</option>
+                    <option value="100k-150k">$100K – $150K</option>
+                    <option value="150k-200k">$150K – $200K</option>
+                    <option value="200k-plus">$200K+</option>
+                  </select>
+                </div>
+
                 <div className="mb-6">
-                  <label htmlFor="message" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">Tell us about your business</label>
-                  <textarea id="message" rows={4}
+                  <label htmlFor="message" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500 mb-2">Tell us about your business</label>
+                  <textarea id="message" name="message" rows={4}
                     placeholder="How many calls do you miss per week? What CRM do you use? What's your biggest bottleneck?"
-                    className="w-full bg-background border border-divider rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all resize-none" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-500/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all resize-none" />
                 </div>
 
                 <button type="submit" disabled={status === 'sending'}
-                  className="magnetic-btn w-full inline-flex items-center justify-center gap-2 bg-primary text-deep py-4 rounded-sm font-semibold shadow-lg shadow-primary/20 disabled:opacity-60 transition-opacity uppercase tracking-wide text-sm">
+                  className="magnetic-btn w-full inline-flex items-center justify-center gap-2 bg-primary text-white py-4 rounded-xl font-semibold shadow-lg shadow-primary/30 disabled:opacity-60 transition-opacity">
                   {status === 'sending' ? (
                     <><Activity className="h-4 w-4 animate-pulse" strokeWidth={2.4} /> Sending…</>
                   ) : (
-                    <>Book Your Free Strategy Call <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} /></>
+                    <>Book Your Free Strategy Call <ArrowUpRight className="h-4 w-4" strokeWidth={2.4} /></>
                   )}
                 </button>
               </form>

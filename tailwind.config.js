@@ -4,11 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary:        '#E07B39',
-        'primary-dark': '#C05A1F',
-        'primary-light':'#F09A60',
-        accent:         '#F0C080',
-        'accent-dark':  '#D4A060',
+        primary:        '#2563EB',
+        'primary-dark': '#1D4ED8',
+        'primary-light':'#3B82F6',
+        accent:         '#F59E0B',
+        'accent-dark':  '#D97706',
         background:     '#0C0C0E',
         surface:        '#131316',
         ink:            '#F0F0F0',
