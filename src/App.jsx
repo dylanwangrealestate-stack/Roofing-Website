@@ -887,24 +887,28 @@ function FAQ() {
   const [open, setOpen] = useState(null)
   const items = [
     {
-      q: 'Will it sound robotic?',
-      a: "No — and that's the most common question we get. We spend days training the agent on your specific business before it ever goes live. You test it yourself before we flip the switch. If it doesn't sound right, we keep working.",
+      q: "What happens when I'm on a job site and a lead calls?",
+      a: "The agent answers instantly, qualifies them on the call, captures their project details, and books the estimate directly on your calendar. You finish the job and wake up with appointments already set.",
     },
     {
-      q: 'What if I already have someone answering phones?',
-      a: "Great — this doesn't replace them. It handles overflow, after-hours, and the calls they miss. Think of it as backup coverage that's always on.",
+      q: "Will it sound robotic?",
+      a: "No — and that's the most common thing we hear. We train the agent specifically on your business before it ever goes live. Your service area, your project types, how you talk to homeowners. You test it yourself before we launch it. If it doesn't sound right we keep working until it does.",
     },
     {
-      q: 'How does it connect to my calendar?',
-      a: 'It integrates directly with Google Calendar, Calendly, or whatever booking system you use. Estimates get booked in real time — you wake up with appointments already on the calendar.',
+      q: "What if I already use Jobber or BuilderTrend?",
+      a: "It works with whatever system you're already using — whether that's a CRM, a calendar, or just your phone. You don't change anything about how you currently operate. It handles the calls and follow-ups your current setup can't.",
+    },
+    {
+      q: "How much revenue am I actually losing right now?",
+      a: "The average contractor missing 5 calls a week at a $50K job value and closing just 1 of those per month is leaving $50,000 on the table every single month. That's the problem this fixes. One recovered job pays for the entire system.",
     },
     {
       q: "What if I want to make changes after it's live?",
-      a: "That's what the monthly retainer covers. You call us, we update it. Most changes are handled within 24 hours.",
+      a: "Includes ongoing management, updates, and optimization every month — we stay on it so you don't have to.",
     },
     {
-      q: 'How do I know this will work for my business?',
-      a: "That's exactly what the strategy call is for. We'll look at your current setup, your call volume, and your project types — and tell you honestly if this makes sense for you. If it doesn't, we'll tell you that too.",
+      q: "How do I know this will work for my business?",
+      a: "That's exactly what the strategy call is for. We'll look at your call volume, your average job value, and your current setup — and tell you honestly whether this makes sense for you. If it doesn't, we'll tell you that too.",
     },
   ]
 
