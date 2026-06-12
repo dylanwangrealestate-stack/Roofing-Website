@@ -85,21 +85,21 @@ function SignatureAnim() {
       `}</style>
 
       <div className="px-4 pt-3 pb-2 flex items-center justify-between border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-        <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: '#2563EB' }}>AI Call Pipeline</span>
+        <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: '#2F6FEB' }}>AI Call Pipeline</span>
         <span className="font-mono text-[9px]" style={{ color: 'rgba(255,255,255,0.3)' }}>Live</span>
       </div>
 
       <div key={phase} className="flex-1 flex items-center px-4 gap-3" style={{ animation: 'phase-in 0.3s ease' }}>
         <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-          style={{ background: phase === 3 ? 'rgba(34,197,94,0.15)' : 'rgba(37,99,235,0.15)' }}>
-          <span className="font-mono text-xs font-bold" style={{ color: phase === 3 ? '#22c55e' : '#2563EB' }}>
+          style={{ background: phase === 3 ? 'rgba(34,197,94,0.15)' : 'rgba(47,111,235,0.15)' }}>
+          <span className="font-mono text-xs font-bold" style={{ color: phase === 3 ? '#22c55e' : '#2F6FEB' }}>
             {phases[phase].step}
           </span>
         </div>
         <div>
           <p className="font-mono text-[10px] uppercase tracking-wide" style={{ color: '#ffffff' }}>{phases[phase].label}</p>
           <p className="font-body text-[11px] mt-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>{phases[phase].sub}</p>
-          <p className="font-mono text-[9px] mt-1" style={{ color: phase === 3 ? '#22c55e' : '#2563EB' }}>{phases[phase].detail}</p>
+          <p className="font-mono text-[9px] mt-1" style={{ color: phase === 3 ? '#22c55e' : '#2F6FEB' }}>{phases[phase].detail}</p>
         </div>
       </div>
 
@@ -107,7 +107,7 @@ function SignatureAnim() {
         {phases.map((_, i) => (
           <div key={i} className="h-1 rounded-full transition-all duration-300"
             style={{
-              background: i === phase ? (phase === 3 ? '#22c55e' : '#2563EB') : 'rgba(255,255,255,0.12)',
+              background: i === phase ? (phase === 3 ? '#22c55e' : '#2F6FEB') : 'rgba(255,255,255,0.12)',
               width: i === phase ? '24px' : '6px',
             }} />
         ))}
@@ -120,7 +120,7 @@ function SignatureAnim() {
 function LeadFlowShuffler() {
   const stats = [
     { value: 5,  suffix: '',  prefix: '',  label: 'Calls missed this week',       color: '#ef4444' },
-    { value: 47, suffix: 'K', prefix: '$', label: '1 job closed = $47K avg revenue', color: '#2563EB' },
+    { value: 47, suffix: 'K', prefix: '$', label: '1 job closed = $47K avg revenue', color: '#2F6FEB' },
     { value: 15, suffix: 'x', prefix: '',  label: 'Average ROI in year one',      color: '#22c55e' },
   ]
   const [statIdx, setStatIdx] = useState(0)
@@ -233,7 +233,7 @@ function AIScheduler() {
   }, [])
 
   return (
-    <div className="relative h-44 rounded-3xl overflow-hidden bg-white p-4 flex flex-col gap-2">
+    <div className="relative h-44 rounded-3xl overflow-hidden bg-surface p-4 flex flex-col gap-2">
       <div className="flex items-center justify-between mb-1">
         <span className="font-mono text-[9px] uppercase tracking-widest text-primary/80">Estimate Scheduler</span>
         {step >= 3 && <span className="font-mono text-[9px] text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full">Booked</span>}
@@ -241,7 +241,7 @@ function AIScheduler() {
       <div className="grid grid-cols-5 gap-1 flex-1">
         {days.map((day, di) => (
           <div key={di} className="flex flex-col gap-1">
-            <span className="font-mono text-[8px] text-center text-slate-500 uppercase">{day}</span>
+            <span className="font-mono text-[8px] text-center text-muted uppercase">{day}</span>
             {slots.map((slot, si) => {
               const isTarget = di === targetDay && si === targetSlot
               const isCursor = step >= 1 && isTarget
@@ -250,9 +250,9 @@ function AIScheduler() {
                 <div key={si}
                   className="rounded-lg h-7 flex items-center justify-center text-[8px] font-mono transition-all duration-300"
                   style={{
-                    background: isBooked ? '#E07B39' : isCursor ? 'rgba(224,123,57,0.25)' : 'rgba(255,255,255,0.04)',
-                    border: isCursor ? '1px solid #E07B39' : '1px solid rgba(255,255,255,0.06)',
-                    color: isBooked ? '#0C0C0E' : '#777',
+                    background: isBooked ? '#2F6FEB' : isCursor ? 'rgba(47,111,235,0.22)' : 'rgba(47,111,235,0.04)',
+                    border: isCursor ? '1px solid rgba(47,111,235,0.6)' : '1px solid rgba(47,111,235,0.08)',
+                    color: isBooked ? '#ffffff' : '#64748B',
                     transform: isCursor && step === 2 ? 'scale(1.1)' : 'scale(1)',
                   }}>
                   {isBooked ? '✓' : slot}
@@ -274,18 +274,18 @@ function AIScheduler() {
 // ─── Missed Call Card ─────────────────────────────────────────────────────────
 function MissedCallCard() {
   return (
-    <div className="rounded-2xl bg-white border border-slate-200 p-6 shadow-xl shadow-black/40 max-w-sm w-full">
+    <div className="rounded-2xl glass-card p-6 shadow-2xl shadow-black/60 max-w-sm w-full">
       {/* Header */}
       <div className="flex items-center gap-2.5 mb-4">
         <div className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
         <span className="font-mono text-[10px] text-red-400 uppercase tracking-wider">Missed Call</span>
-        <span className="font-mono text-[10px] text-slate-500 ml-auto">2 mins ago</span>
+        <span className="font-mono text-[10px] text-muted ml-auto">2 mins ago</span>
       </div>
       {/* Caller */}
-      <p className="font-body font-semibold text-slate-900 text-base mb-1">Sarah M.</p>
-      <p className="font-body text-sm text-slate-500 mb-5">Kitchen remodel · 1,200 sq ft</p>
+      <p className="font-body font-semibold text-ink text-base mb-1">Sarah M.</p>
+      <p className="font-body text-sm text-muted mb-5">Kitchen remodel · 1,200 sq ft</p>
       {/* Divider */}
-      <div className="h-px bg-slate-200 mb-5" />
+      <div className="h-px bg-divider mb-5" />
       {/* Resolved rows */}
       <div className="flex flex-col gap-3 mb-5">
         {['AI Agent answered', 'Lead qualified', 'Estimate booked'].map((item, i) => (
@@ -321,23 +321,23 @@ function Navbar() {
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass shadow-lg shadow-black/30' : ''}`}>
         <div className="max-w-6xl mx-auto px-6 sm:px-10 h-16 flex items-center justify-between">
-          <a href="#home" className="font-display font-bold text-xl tracking-wide text-slate-900 lift-on-hover">
+          <a href="#home" className="font-display font-bold text-xl tracking-wide text-ink lift-on-hover">
             CORNERSTONE GROWTH
           </a>
           <div className="hidden lg:flex items-center gap-8">
             {NAV_LINKS.map(l => (
               <a key={l.label} href={l.href}
-                className="font-body text-sm text-slate-500 hover:text-slate-900 lift-on-hover transition-colors duration-200">
+                className="font-body text-sm text-muted hover:text-ink lift-on-hover transition-colors duration-200">
                 {l.label}
               </a>
             ))}
           </div>
           <div className="flex items-center gap-3">
             <a href="#book-call"
-              className="hidden sm:inline-flex magnetic-btn items-center gap-1.5 bg-primary text-deep text-sm font-semibold px-5 py-2.5 rounded-sm shadow-lg shadow-primary/20 tracking-wide uppercase">
+              className="hidden sm:inline-flex magnetic-btn items-center gap-1.5 bg-primary text-white text-sm font-semibold px-5 py-2.5 rounded-sm shadow-lg shadow-primary/20 tracking-wide uppercase">
               Book a Call <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.5} />
             </a>
-            <button onClick={() => setOpen(true)} className="lg:hidden p-2 text-slate-500 hover:text-slate-900 transition-colors" aria-label="Open menu">
+            <button onClick={() => setOpen(true)} className="lg:hidden p-2 text-muted hover:text-ink transition-colors" aria-label="Open menu">
               <Menu className="h-5 w-5" />
             </button>
           </div>
@@ -363,7 +363,7 @@ function Navbar() {
           </nav>
           <div className="mt-auto">
             <a href="#book-call" onClick={() => setOpen(false)}
-              className="magnetic-btn inline-flex items-center gap-2 bg-primary text-deep font-semibold px-6 py-4 rounded-sm w-full justify-center shadow-lg shadow-primary/20 uppercase tracking-wide">
+              className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-4 rounded-sm w-full justify-center shadow-lg shadow-primary/20 uppercase tracking-wide">
               Book a Call <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>
@@ -380,42 +380,50 @@ function Hero() {
   useEffect(() => {
     if (prefersReducedMotion) return
     const ctx = gsap.context(() => {
-      gsap.from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.7, delay: 0.2, ease: 'power3.out' })
-      gsap.from('.hero-line-1', { y: 40, opacity: 0, duration: 1,   delay: 0.4, ease: 'power3.out' })
-      gsap.from('.hero-line-2', { y: 50, opacity: 0, duration: 1.1, delay: 0.55,ease: 'power3.out' })
-      gsap.from('.hero-line-3', { y: 50, opacity: 0, duration: 1.1, delay: 0.65,ease: 'power3.out' })
-      gsap.from('.hero-sub',    { y: 24, opacity: 0, duration: 0.8, delay: 0.85,ease: 'power3.out' })
-      gsap.from('.hero-cta',    { y: 20, opacity: 0, duration: 0.7, delay: 1.0, ease: 'power3.out' })
-      gsap.from('.hero-card',   { x: 30, opacity: 0, duration: 0.9, delay: 1.1, ease: 'power3.out' })
+      const heroTl = gsap.timeline({ delay: 0.1 })
+      heroTl
+        .fromTo('.hero-eyebrow', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' }, 0.2)
+        .fromTo('.hero-line-1',  { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1,   ease: 'power3.out' }, 0.4)
+        .fromTo('.hero-line-2',  { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: 'power3.out' }, 0.55)
+        .fromTo('.hero-line-3',  { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: 'power3.out' }, 0.65)
+        .fromTo('.hero-sub',     { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }, 0.85)
+        .fromTo('.hero-cta',     { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' }, 1.0)
+        .fromTo('.hero-card',    { x: 30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }, 1.1)
     }, ref)
     return () => ctx.revert()
   }, [])
 
   return (
-    <section id="home" ref={ref} className="relative min-h-[100dvh] overflow-hidden bg-slate-50">
+    <section id="home" ref={ref} className="relative min-h-[100dvh] overflow-hidden bg-background" style={{ backgroundColor: '#06080F' }}>
       {/* Hero background image */}
       <img
         src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1800&q=80&auto=format&fit=crop"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover brightness-[0.5]"
+        className="absolute inset-0 w-full h-full object-cover brightness-[0.35]"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/50 to-blue-900/20" />
-      {/* Grid bg */}
-      <div className="absolute inset-0 grid-bg opacity-40" />
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(6,8,15,0.85) 0%, rgba(12,18,32,0.6) 50%, rgba(79,70,229,0.15) 100%)' }} />
 
+      {/* Floating gradient orbs */}
+      <div className="orb w-[700px] h-[700px] animate-orb-drift" style={{ background: 'radial-gradient(circle, rgba(47,111,235,0.18) 0%, transparent 65%)', top: '-200px', right: '-200px' }} />
+      <div className="orb w-[500px] h-[500px] animate-float-slower" style={{ background: 'radial-gradient(circle, rgba(167,139,250,0.12) 0%, transparent 65%)', bottom: '-100px', left: '-150px', animationDelay: '5s' }} />
+      <div className="orb w-[300px] h-[300px] animate-float-slow" style={{ background: 'radial-gradient(circle, rgba(47,111,235,0.1) 0%, transparent 65%)', top: '40%', left: '40%', animationDelay: '2s' }} />
+
+      {/* Grid bg */}
+      <div className="absolute inset-0 grid-bg opacity-25" />
       {/* Top gradient fade */}
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
       {/* Bottom gradient fade */}
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-background to-transparent" />
+      {/* Top accent line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
       {/* Floating particles */}
-      <div className="absolute top-32 right-16 w-2 h-2 rounded-full bg-primary/60 animate-float" style={{ animationDelay: '0s' }} />
-      <div className="absolute top-48 right-32 w-1.5 h-1.5 rounded-full bg-primary/40 animate-float" style={{ animationDelay: '1.5s' }} />
-      <div className="absolute top-24 right-52 w-1 h-1 rounded-full bg-primary-light/50 animate-float" style={{ animationDelay: '3s' }} />
-      <div className="absolute top-64 right-20 w-2.5 h-2.5 rounded-full bg-primary/30 animate-float" style={{ animationDelay: '0.8s' }} />
-
-      {/* Top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+      <div className="absolute top-32 right-16 w-2 h-2 rounded-full bg-primary/70 animate-float" style={{ animationDelay: '0s' }} />
+      <div className="absolute top-48 right-32 w-1.5 h-1.5 rounded-full bg-accent/50 animate-float" style={{ animationDelay: '1.5s' }} />
+      <div className="absolute top-24 right-52 w-1 h-1 rounded-full bg-primary-light/60 animate-float" style={{ animationDelay: '3s' }} />
+      <div className="absolute top-64 right-20 w-2.5 h-2.5 rounded-full bg-primary/40 animate-float" style={{ animationDelay: '0.8s' }} />
+      <div className="absolute top-80 left-20 w-1.5 h-1.5 rounded-full bg-accent/30 animate-float" style={{ animationDelay: '2.2s' }} />
+      <div className="absolute top-52 left-48 w-1 h-1 rounded-full bg-primary-light/40 animate-float" style={{ animationDelay: '4s' }} />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 pt-28 pb-20 min-h-[100dvh] flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
         {/* Left */}
@@ -426,18 +434,18 @@ function Hero() {
           <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-8xl text-white tracking-tight leading-[0.95] mb-8">
             <span className="hero-line-1 block">Your Phone Rings.</span>
             <span className="hero-line-2 block">You're On a Job Site.</span>
-            <span className="hero-line-3 block text-primary">That Lead Just Called<br className="hidden sm:block" /> Your Competitor.</span>
+            <span className="hero-line-3 block gradient-text">That Lead Just Called<br className="hidden sm:block" /> Your Competitor.</span>
           </h1>
-          <p className="hero-sub font-body text-base sm:text-lg text-white/75 leading-relaxed max-w-lg mb-10">
+          <p className="hero-sub font-body text-base sm:text-lg text-white/65 leading-relaxed max-w-lg mb-10">
             Your phone rings. You're on a roof. That homeowner calls the next contractor on Google. Cornerstone Growth answers every call, qualifies every lead, and books every estimate — 24/7, even when you can't pick up.
           </p>
           <div className="hero-cta flex flex-col sm:flex-row gap-3 items-start">
             <a href="#book-call"
-              className="magnetic-btn inline-flex items-center gap-2 bg-primary text-deep px-7 py-4 rounded-sm font-semibold shadow-lg shadow-primary/25 text-sm uppercase tracking-wide">
+              className="magnetic-btn btn-shimmer inline-flex items-center gap-2 text-white px-7 py-4 rounded-sm font-semibold shadow-xl shadow-primary/30 text-sm uppercase tracking-wide">
               Book a Free Strategy Call <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
             </a>
           </div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mt-4">Built for general contractors · AI voice agents · Never miss a call</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/60 mt-4">Built for general contractors · AI voice agents · Never miss a call</p>
         </div>
 
         {/* Right — missed call card */}
@@ -457,51 +465,51 @@ function Features() {
   useEffect(() => {
     if (prefersReducedMotion) return
     const ctx = gsap.context(() => {
-      gsap.from('.feature-card', {
-        scrollTrigger: { trigger: ref.current, start: 'top 80%', once: true },
-        y: 40, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
-      })
+      gsap.fromTo('.feature-card',
+        { y: 40, opacity: 0 },
+        { scrollTrigger: { trigger: ref.current, start: 'top 85%', once: true }, y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power3.out', immediateRender: false }
+      )
     }, ref)
     return () => ctx.revert()
   }, [])
 
   return (
-    <section id="features" ref={ref} className="py-24 sm:py-32 bg-slate-50 border-t border-slate-200">
+    <section id="features" ref={ref} className="py-24 sm:py-32 bg-background border-t border-divider" style={{ backgroundColor: '#06080F', borderTopColor: '#1A2540' }}>
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <div className="mb-14">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Platform</p>
-          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 max-w-2xl">
-            What the system does <span className="font-serif italic font-medium text-primary-light">while you work.</span>
+          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-ink max-w-2xl" style={{ color: '#E8EEFF' }}>
+            What the system does <span className="font-serif italic font-medium text-primary-light" style={{ color: '#5C93F5' }}>while you work.</span>
           </h2>
-          <p className="mt-4 text-slate-500 text-base sm:text-lg max-w-xl leading-relaxed">
+          <p className="mt-4 text-muted text-base sm:text-lg max-w-xl leading-relaxed" style={{ color: '#64748B' }}>
             Three modules working in parallel — so no lead falls through the cracks while you're on site.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="feature-card rounded-2xl bg-white border border-slate-200 p-6 sm:p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">Lead Flow</p>
-            <h3 className="font-display text-xl font-black text-slate-900 mb-4 tracking-tight">From ring to booked</h3>
+          <div className="feature-card glow-card rounded-2xl bg-surface border border-divider p-6 sm:p-8" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2" style={{ color: '#64748B' }}>Lead Flow</p>
+            <h3 className="font-display text-xl font-black text-ink mb-4 tracking-tight" style={{ color: '#E8EEFF' }}>From ring to booked</h3>
             <LeadFlowShuffler />
-            <p className="mt-4 text-sm text-slate-500 leading-relaxed">
+            <p className="mt-4 text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>
               Every call triggers an instant response sequence. The AI qualifies, responds, and books — without any human intervention.
             </p>
           </div>
 
-          <div className="feature-card rounded-2xl bg-white border border-slate-200 p-6 sm:p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">AI Pipeline</p>
-            <h3 className="font-display text-xl font-black text-slate-900 mb-4 tracking-tight">Live automation</h3>
+          <div className="feature-card glow-card rounded-2xl bg-surface border border-divider p-6 sm:p-8" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2" style={{ color: '#64748B' }}>AI Pipeline</p>
+            <h3 className="font-display text-xl font-black text-ink mb-4 tracking-tight" style={{ color: '#E8EEFF' }}>Live automation</h3>
             <SignatureAnim />
-            <p className="mt-4 text-sm text-slate-500 leading-relaxed">
+            <p className="mt-4 text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>
               Real-time processing of every call, lead, and follow-up — running in parallel across everything in your pipeline.
             </p>
           </div>
 
-          <div className="feature-card rounded-2xl bg-white border border-slate-200 p-6 sm:p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">Scheduling</p>
-            <h3 className="font-display text-xl font-black text-slate-900 mb-4 tracking-tight">Estimates booked instantly</h3>
+          <div className="feature-card glow-card rounded-2xl bg-surface border border-divider p-6 sm:p-8" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2" style={{ color: '#64748B' }}>Scheduling</p>
+            <h3 className="font-display text-xl font-black text-ink mb-4 tracking-tight" style={{ color: '#E8EEFF' }}>Estimates booked instantly</h3>
             <AIScheduler />
-            <p className="mt-4 text-sm text-slate-500 leading-relaxed">
+            <p className="mt-4 text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>
               The agent finds the next open slot and books the estimate in real time — no phone tag, no back-and-forth.
             </p>
           </div>
@@ -520,12 +528,12 @@ function Pillars() {
   ]
 
   return (
-    <section className="relative py-24 sm:py-32 bg-slate-50 overflow-hidden border-t border-slate-200">
-      <div className="absolute inset-0 grid-bg opacity-25" />
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 rounded-full bg-primary/5 blur-3xl" />
+    <section className="relative py-24 sm:py-32 bg-background overflow-hidden border-t border-divider" style={{ backgroundColor: '#06080F', borderTopColor: '#1A2540' }}>
+      <div className="absolute inset-0 grid-bg opacity-20" />
+      <div className="orb w-[500px] h-[500px] animate-glow-pulse" style={{ background: 'radial-gradient(circle, rgba(47,111,235,0.1) 0%, transparent 65%)', top: '50%', left: '10%', transform: 'translateY(-50%)' }} />
+      <div className="orb w-[300px] h-[300px] animate-float-slow" style={{ background: 'radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 65%)', top: '30%', right: '15%', animationDelay: '3s' }} />
       <div className="relative max-w-6xl mx-auto px-6 sm:px-10">
-        <div className="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-slate-200">
+        <div className="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-divider">
           {pillars.map((p, i) => (
             <div key={i} className="px-8 py-10 lg:py-0 text-center lg:text-left first:pl-0 last:pr-0">
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">{p.eyebrow}</p>
@@ -537,7 +545,7 @@ function Pillars() {
                   style={{ animation: 'pillar-sweep 3s ease-in-out infinite' }} />
               </div>
               <style>{`@keyframes pillar-sweep { 0%{transform:translateX(-100%)} 50%{transform:translateX(100%)} 100%{transform:translateX(100%)} }`}</style>
-              <p className="text-sm text-slate-500 leading-relaxed">{p.desc}</p>
+              <p className="text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>{p.desc}</p>
             </div>
           ))}
         </div>
@@ -549,44 +557,44 @@ function Pillars() {
 // ─── Problem ──────────────────────────────────────────────────────────────────
 function Problem() {
   return (
-    <section id="problem" className="py-24 sm:py-32 bg-white border-t border-b border-slate-200">
+    <section id="problem" className="py-24 sm:py-32 bg-background border-t border-b border-divider" style={{ backgroundColor: '#06080F', borderTopColor: '#1A2540', borderBottomColor: '#1A2540' }}>
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">The Reality</p>
-            <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 mb-8">
+            <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-ink mb-8" style={{ color: '#E8EEFF' }}>
               You Can't Answer Calls While Managing a Crew. That's Not a Flaw — It's Just the Job.
             </h2>
             <div className="flex flex-col gap-6">
-              <p className="text-base sm:text-lg text-slate-500 leading-relaxed">
+              <p className="text-base sm:text-lg text-muted leading-relaxed" style={{ color: '#64748B' }}>
                 You're on a slab at 7am. On a roof at 2pm. Managing a crew at 4. Your phone rings and you can't pick up. That homeowner calls the next contractor on Google.
               </p>
-              <p className="text-base sm:text-lg text-slate-500 leading-relaxed">
+              <p className="text-base sm:text-lg text-muted leading-relaxed" style={{ color: '#64748B' }}>
                 It's not a sales problem. It's a structural one. The contractors winning in your market aren't better than you — they just have a system that answers when they can't.
               </p>
-              <p className="text-base sm:text-lg font-semibold text-slate-900 leading-relaxed">
+              <p className="text-base sm:text-lg font-semibold text-ink leading-relaxed" style={{ color: '#E8EEFF' }}>
                 That's what we build.
               </p>
             </div>
           </div>
 
           {/* Visual timeline */}
-          <div className="rounded-2xl bg-slate-50 border border-slate-200 p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-6">A typical Tuesday</p>
+          <div className="rounded-2xl bg-surface border border-divider p-8 glow-card" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-6" style={{ color: '#64748B' }}>A typical Tuesday</p>
             <div className="flex flex-col gap-0">
               {[
-                { time: '7:04am', text: "You're on a slab. Phone buzzes — unknown number. Can't pick up.", color: 'text-slate-500' },
-                { time: '7:05am', text: 'Homeowner hangs up. No voicemail. Calls the next result on Google.', color: 'text-red-400' },
-                { time: '7:06am', text: 'Your competitor picks up. Estimate scheduled for Thursday.', color: 'text-red-400' },
-                { time: '11:30am', text: 'You call back. Goes to voicemail. They never return your call.', color: 'text-slate-500' },
-                { time: 'With CG', text: 'Call answered instantly. Lead qualified. Estimate on your calendar.', color: 'text-primary' },
+                { time: '7:04am', text: "You're on a slab. Phone buzzes — unknown number. Can't pick up.", color: '#64748B' },
+                { time: '7:05am', text: 'Homeowner hangs up. No voicemail. Calls the next result on Google.', color: '#f87171' },
+                { time: '7:06am', text: 'Your competitor picks up. Estimate scheduled for Thursday.', color: '#f87171' },
+                { time: '11:30am', text: 'You call back. Goes to voicemail. They never return your call.', color: '#64748B' },
+                { time: 'With CG', text: 'Call answered instantly. Lead qualified. Estimate on your calendar.', color: '#2F6FEB' },
               ].map((item, i) => (
                 <div key={i}>
                   <div className="flex gap-4 py-4">
-                    <span className={`font-mono text-[10px] min-w-[52px] pt-0.5 ${i === 4 ? 'text-primary' : 'text-slate-500'}`}>{item.time}</span>
-                    <span className={`text-sm leading-relaxed ${item.color}`}>{item.text}</span>
+                    <span className="font-mono text-[10px] min-w-[52px] pt-0.5" style={{ color: i === 4 ? '#2F6FEB' : '#64748B' }}>{item.time}</span>
+                    <span className="text-sm leading-relaxed" style={{ color: item.color }}>{item.text}</span>
                   </div>
-                  {i < 4 && <div className="ml-[52px] h-px bg-slate-200" />}
+                  {i < 4 && <div className="ml-[52px] h-px" style={{ backgroundColor: '#1A2540' }} />}
                 </div>
               ))}
             </div>
@@ -604,10 +612,10 @@ function Solution() {
   useEffect(() => {
     if (prefersReducedMotion) return
     const ctx = gsap.context(() => {
-      gsap.from('.sol-card', {
-        scrollTrigger: { trigger: ref.current, start: 'top 80%', once: true },
-        y: 36, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
-      })
+      gsap.fromTo('.sol-card',
+        { y: 36, opacity: 0 },
+        { scrollTrigger: { trigger: ref.current, start: 'top 85%', once: true }, y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power3.out', immediateRender: false }
+      )
     }, ref)
     return () => ctx.revert()
   }, [])
@@ -631,23 +639,23 @@ function Solution() {
   ]
 
   return (
-    <section id="solution" ref={ref} className="py-24 sm:py-32 bg-slate-50 border-t border-slate-200">
+    <section id="solution" ref={ref} className="py-24 sm:py-32 bg-background border-t border-divider" style={{ backgroundColor: '#06080F', borderTopColor: '#1A2540' }}>
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <div className="mb-14">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">What We Build</p>
-          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 max-w-3xl">
+          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight max-w-3xl" style={{ color: '#E8EEFF' }}>
             A 24/7 Voice Agent That Runs Your Phone Like a Full-Time Receptionist.
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {cards.map((c, i) => (
-            <div key={i} className="sol-card bg-white p-8 sm:p-10 hover:bg-slate-50 transition-colors duration-300 group">
-              <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <div key={i} className="sol-card glow-card bg-surface border border-divider rounded-2xl p-8 sm:p-10 transition-all duration-300 group" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
+              <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
                 {c.icon}
               </div>
-              <h3 className="font-display font-black text-xl sm:text-2xl text-slate-900 tracking-tight mb-3">{c.title}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">{c.text}</p>
+              <h3 className="font-display font-black text-xl sm:text-2xl text-ink tracking-tight mb-3" style={{ color: '#E8EEFF' }}>{c.title}</h3>
+              <p className="text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>{c.text}</p>
             </div>
           ))}
         </div>
@@ -707,10 +715,10 @@ function Protocol() {
   ]
 
   return (
-    <section id="process" className="relative bg-slate-50 border-t border-slate-200">
+    <section id="process" className="relative bg-background border-t border-divider" style={{ backgroundColor: '#06080F', borderTopColor: '#1A2540' }}>
       <div className="max-w-6xl mx-auto px-6 sm:px-10 pt-24 pb-8">
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">The Process</p>
-        <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 max-w-2xl">
+        <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight max-w-2xl" style={{ color: '#E8EEFF' }}>
           Fast Turnaround. Zero Tech Knowledge Required.
         </h2>
       </div>
@@ -720,17 +728,18 @@ function Protocol() {
           <div key={i} ref={el => cardsRef.current[i] = el}
             className="sticky top-24 mx-auto max-w-6xl px-6 sm:px-10 pb-8"
             style={{ zIndex: i + 1 }}>
-            <div className="rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-2xl shadow-black/30">
+            <div className="rounded-2xl bg-surface border border-divider overflow-hidden shadow-2xl shadow-primary/5" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540', boxShadow: '0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(47,111,235,0.08)' }}>
+              <div className="h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
               <div className="p-8 sm:p-12 lg:p-14">
                 <div className="flex items-center gap-4 mb-8">
                   <span className="font-display font-black text-5xl gradient-text leading-none">{s.num}</span>
-                  <div className="h-px flex-1 bg-slate-200" />
+                  <div className="h-px flex-1" style={{ backgroundColor: '#1A2540' }} />
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">{s.eyebrow}</span>
                 </div>
                 <div className="grid lg:grid-cols-2 gap-8 items-start">
                   <div>
-                    <h3 className="font-display font-black text-2xl sm:text-3xl text-slate-900 tracking-tight mb-4">{s.title}</h3>
-                    <p className="text-slate-500 leading-relaxed text-base sm:text-lg">{s.body}</p>
+                    <h3 className="font-display font-black text-2xl sm:text-3xl text-ink tracking-tight mb-4" style={{ color: '#E8EEFF' }}>{s.title}</h3>
+                    <p className="text-muted leading-relaxed text-base sm:text-lg" style={{ color: '#64748B' }}>{s.body}</p>
                   </div>
                   {s.img ? (
                     <div>
@@ -741,7 +750,7 @@ function Protocol() {
                         {s.bullets.map((b, j) => (
                           <li key={j} className="flex items-start gap-3">
                             <ChevronRight className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                            <span className="text-sm text-slate-500 leading-relaxed">{b}</span>
+                            <span className="text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>{b}</span>
                           </li>
                         ))}
                       </ul>
@@ -751,7 +760,7 @@ function Protocol() {
                       {s.bullets.map((b, j) => (
                         <li key={j} className="flex items-start gap-3">
                           <ChevronRight className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                          <span className="text-sm text-slate-500 leading-relaxed">{b}</span>
+                          <span className="text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>{b}</span>
                         </li>
                       ))}
                     </ul>
@@ -773,40 +782,40 @@ function ServicesGrid() {
   useEffect(() => {
     if (prefersReducedMotion) return
     const ctx = gsap.context(() => {
-      gsap.from('.svc-tile', {
-        scrollTrigger: { trigger: ref.current, start: 'top 80%', once: true },
-        y: 30, opacity: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out',
-      })
+      gsap.fromTo('.svc-tile',
+        { y: 30, opacity: 0 },
+        { scrollTrigger: { trigger: ref.current, start: 'top 85%', once: true }, y: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out', immediateRender: false }
+      )
     }, ref)
     return () => ctx.revert()
   }, [])
 
   return (
-    <section id="included" ref={ref} className="bg-deep text-white py-24 sm:py-32 border-t border-white/5">
+    <section id="included" ref={ref} className="bg-background py-24 sm:py-32 border-t border-divider" style={{ backgroundColor: '#06080F', borderTopColor: '#1A2540' }}>
       <div className="max-w-6xl mx-auto px-6 sm:px-10 mb-14">
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">The System</p>
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
           <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-white max-w-2xl">
-            Everything You Need. <span className="text-primary">Nothing You Don't.</span>
+            Everything You Need. <span style={{ color: '#2F6FEB' }}>Nothing You Don't.</span>
           </h2>
           <a href="#book-call"
-            className="magnetic-btn inline-flex items-center gap-2 bg-primary text-deep px-6 py-3 rounded-sm font-semibold text-sm shadow-lg shadow-primary/20 flex-shrink-0 uppercase tracking-wide">
+            className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-sm font-semibold text-sm shadow-lg shadow-primary/20 flex-shrink-0 uppercase tracking-wide">
             Get Started <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04] rounded-2xl overflow-hidden border border-white/[0.06]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {SERVICES.map((s, i) => {
             const Icon = s.icon
             return (
-              <div key={i} className="svc-tile bg-deep p-7 hover:bg-white/[0.03] transition-colors duration-300 group">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+              <div key={i} className="svc-tile glow-card bg-surface border border-divider rounded-2xl p-7 transition-all duration-300 group" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
                   <Icon className="h-5 w-5 text-primary" strokeWidth={2.2} />
                 </div>
-                <h3 className="font-display font-black text-base text-white tracking-tight mb-2">{s.title}</h3>
-                <p className="text-xs text-white/50 leading-relaxed">{s.text}</p>
+                <h3 className="font-display font-black text-base text-ink tracking-tight mb-2" style={{ color: '#E8EEFF' }}>{s.title}</h3>
+                <p className="text-xs text-muted leading-relaxed" style={{ color: '#64748B' }}>{s.text}</p>
               </div>
             )
           })}
@@ -854,25 +863,26 @@ function TrustSignals() {
   ]
 
   return (
-    <section ref={ref} className="py-24 sm:py-32 bg-slate-50 border-t border-slate-200">
-      <div className="max-w-6xl mx-auto px-6 sm:px-10">
+    <section ref={ref} className="relative py-24 sm:py-32 bg-background border-t border-divider overflow-hidden" style={{ backgroundColor: '#06080F', borderTopColor: '#1A2540' }}>
+      <div className="orb w-[400px] h-[400px] animate-float-slow" style={{ background: 'radial-gradient(circle, rgba(47,111,235,0.09) 0%, transparent 65%)', top: '50%', right: '-100px', transform: 'translateY(-50%)' }} />
+      <div className="max-w-6xl mx-auto px-6 sm:px-10 relative">
         <div className="text-center mb-14">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Why Cornerstone Growth</p>
-          <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight text-slate-900">
-            Built for Contractors. <span className="font-serif italic font-medium text-slate-500">Not for everyone.</span>
+          <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight" style={{ color: '#E8EEFF' }}>
+            Built for Contractors. <span className="font-serif italic font-medium" style={{ color: 'rgba(255,255,255,0.3)' }}>Not for everyone.</span>
           </h2>
         </div>
         <div className="grid lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
           {badges.map((b, i) => {
             const Icon = b.icon
             return (
-              <div key={i} className="trust-badge rounded-2xl bg-white border border-slate-200 p-8 hover:border-primary/30 hover:-translate-y-1 transition-all duration-300"
-                style={{ opacity: 0, transform: 'translateY(24px)' }}>
+              <div key={i} className="trust-badge glow-card rounded-2xl bg-surface border border-divider p-8"
+                style={{ opacity: 0, transform: 'translateY(24px)', backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
                 <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
                   <Icon className="h-5 w-5 text-primary" strokeWidth={2.2} />
                 </div>
-                <h3 className="font-display font-black text-xl text-slate-900 tracking-tight mb-3">{b.title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{b.sub}</p>
+                <h3 className="font-display font-black text-xl text-ink tracking-tight mb-3" style={{ color: '#E8EEFF' }}>{b.title}</h3>
+                <p className="text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>{b.sub}</p>
               </div>
             )
           })}
@@ -913,38 +923,39 @@ function FAQ() {
   ]
 
   return (
-    <section id="faq" className="py-24 sm:py-32 bg-white border-t border-slate-200">
+    <section id="faq" className="py-24 sm:py-32 bg-background border-t border-divider" style={{ backgroundColor: '#06080F', borderTopColor: '#1A2540' }}>
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Questions</p>
-            <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight text-slate-900 mb-6">
+            <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight text-ink mb-6" style={{ color: '#E8EEFF' }}>
               Things Contractors Want to Know First.
             </h2>
-            <p className="text-slate-500 leading-relaxed mb-8">
+            <p className="text-muted leading-relaxed mb-8" style={{ color: '#64748B' }}>
               No sales deck, no case studies from industries you don't work in. Just honest answers.
             </p>
             <a href="#book-call"
-              className="magnetic-btn inline-flex items-center gap-2 bg-primary text-deep px-6 py-3.5 rounded-sm font-semibold text-sm shadow-lg shadow-primary/20 uppercase tracking-wide">
+              className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white px-6 py-3.5 rounded-sm font-semibold text-sm shadow-lg shadow-primary/20 uppercase tracking-wide">
               Still have questions? Book a call <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>
-          <div className="flex flex-col divide-y divide-slate-200 border border-slate-200 rounded-2xl overflow-hidden">
+          <div className="flex flex-col divide-y divide-divider border border-divider rounded-2xl overflow-hidden" style={{ borderColor: '#1A2540', backgroundColor: '#0C1220' }}>
             {items.map((item, i) => (
-              <div key={i}>
+              <div key={i} style={{ borderColor: '#1A2540' }}>
                 <button
                   onClick={() => setOpen(open === i ? null : i)}
-                  className="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-slate-50 transition-colors duration-200">
-                  <span className="font-body font-semibold text-slate-900 text-sm leading-relaxed">{item.q}</span>
-                  <div className={`w-5 h-5 rounded-sm flex items-center justify-center flex-shrink-0 border transition-all duration-200 ${open === i ? 'bg-primary border-primary' : 'border-slate-200'}`}>
+                  className="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-white/[0.04] transition-colors duration-200">
+                  <span className="font-body font-semibold text-sm leading-relaxed" style={{ color: '#E8EEFF' }}>{item.q}</span>
+                  <div className="w-5 h-5 rounded-sm flex items-center justify-center flex-shrink-0 border transition-all duration-200"
+                    style={{ backgroundColor: open === i ? '#2F6FEB' : 'transparent', borderColor: open === i ? '#2F6FEB' : '#1A2540' }}>
                     <span className="block w-2.5 h-px bg-current relative"
-                      style={{ color: open === i ? '#0C0C0E' : '#777' }}>
+                      style={{ color: open === i ? '#EEF2FF' : '#64748B' }}>
                       <span className={`absolute inset-0 w-px h-2.5 bg-current left-1/2 -translate-x-1/2 -top-[5px] transition-transform duration-200 ${open === i ? 'scale-y-0' : 'scale-y-100'}`} />
                     </span>
                   </div>
                 </button>
                 <div className={`overflow-hidden transition-all duration-300 ${open === i ? 'max-h-60' : 'max-h-0'}`}>
-                  <p className="px-6 pb-6 text-sm text-slate-500 leading-relaxed">{item.a}</p>
+                  <p className="px-6 pb-6 text-sm leading-relaxed" style={{ color: '#64748B' }}>{item.a}</p>
                 </div>
               </div>
             ))}
@@ -956,8 +967,80 @@ function FAQ() {
 }
 
 // ─── ContactForm / Final CTA ──────────────────────────────────────────────────
+
+// Service Direct study: contractors believe they answer 97% of calls; actual answer rate 66%
+const MISS_RATE   = 0.34
+// 85% of callers who hit voicemail never call back — they hire the next contractor
+const NO_CALLBACK = 0.85
+// Industry close rate 20–30%; falls as ticket size rises
+const CLOSE_RATE_BY_PROJECT = {
+  under5k:  0.30,
+  b5to10k:  0.25,
+  b10to25k: 0.20,
+  b25to50k: 0.15,
+  b50kplus: 0.10,
+}
+
+const REVENUE_BRACKETS = [
+  { label: 'Under $50K/mo',  value: 'under-50k',  midpoint: 25_000  },
+  { label: '$50K–$100K/mo',  value: '50k-100k',   midpoint: 75_000  },
+  { label: '$100K–$250K/mo', value: '100k-250k',  midpoint: 175_000 },
+  { label: '$250K–$500K/mo', value: '250k-500k',  midpoint: 375_000 },
+  { label: '$500K+/mo',      value: '500k-plus',  midpoint: 600_000 },
+]
+const PROJECT_VALUE_BRACKETS = [
+  { label: 'Under $5K', value: 'under-5k', midpoint: 2_500,  crKey: 'under5k'  },
+  { label: '$5K–$10K',  value: '5k-10k',   midpoint: 7_500,  crKey: 'b5to10k'  },
+  { label: '$10K–$25K', value: '10k-25k',  midpoint: 17_500, crKey: 'b10to25k' },
+  { label: '$25K–$50K', value: '25k-50k',  midpoint: 37_500, crKey: 'b25to50k' },
+  { label: '$50K+',     value: '50k-plus', midpoint: 60_000, crKey: 'b50kplus'  },
+]
+const CALL_VOLUME_BRACKETS = [
+  { label: 'Under 50', value: 'under-50',  midpoint: 25  },
+  { label: '50–100',   value: '50-100',    midpoint: 75  },
+  { label: '100–250',  value: '100-250',   midpoint: 175 },
+  { label: '250–500',  value: '250-500',   midpoint: 375 },
+  { label: '500+',     value: '500-plus',  midpoint: 600 },
+]
+
 function ContactForm() {
-  const [status, setStatus] = useState('idle')
+  const [status, setStatus]             = useState('idle')
+  const [revenue, setRevenue]           = useState('')
+  const [projectVal, setProjectVal]     = useState('')
+  const [callVolume, setCallVolume]     = useState('')
+  const [displayedROI, setDisplayedROI] = useState(0)
+
+  const revB  = REVENUE_BRACKETS.find(b => b.value === revenue)
+  const projB = PROJECT_VALUE_BRACKETS.find(b => b.value === projectVal)
+  const callB = CALL_VOLUME_BRACKETS.find(b => b.value === callVolume)
+
+  const roiCalc = (revB && projB && callB) ? (() => {
+    const lostCallers    = Math.round(callB.midpoint * MISS_RATE * NO_CALLBACK)
+    const volumeProjects = Math.round(lostCallers * CLOSE_RATE_BY_PROJECT[projB.crKey])
+    const currentJobs    = Math.max(1, Math.round(revB.midpoint / projB.midpoint))
+    const lostProjects   = Math.min(volumeProjects, currentJobs)
+    const headline       = lostProjects * projB.midpoint
+    const ratio          = headline / revB.midpoint
+    return { lostCallers, lostProjects, headline, ratio, projectValue: projB.midpoint }
+  })() : null
+
+  const roiValue = roiCalc?.headline ?? 0
+
+  useEffect(() => {
+    if (!roiValue) { setDisplayedROI(0); return }
+    let frame
+    const duration = 600
+    const startTime = performance.now()
+    const tick = (now) => {
+      const t = Math.min((now - startTime) / duration, 1)
+      const ease = 1 - (1 - t) ** 3
+      setDisplayedROI(Math.round(roiValue * ease))
+      if (t < 1) frame = requestAnimationFrame(tick)
+    }
+    frame = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frame)
+  }, [roiValue])
+
   const onSubmit = async (e) => {
     e.preventDefault()
     setStatus('sending')
@@ -970,8 +1053,10 @@ function ContactForm() {
       email: form.email.value,
       phone: form.phone.value,
       company: form.company.value,
-      revenue: form.revenue.value,
-      projectValue: form.projectValue?.value || '',
+      revenue,
+      projectValue: projectVal,
+      callVolume,
+      estimatedMonthlyLoss: roiValue ? `$${roiValue.toLocaleString()}/mo` : '',
       services: Array.from(form.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value).join(', '),
       message: form.message.value,
     }
@@ -995,15 +1080,16 @@ function ContactForm() {
   }
 
   return (
-    <section id="book-call" className="py-24 sm:py-32 lg:py-40 bg-slate-50 border-t border-slate-200">
-      <div className="max-w-6xl mx-auto px-6 sm:px-10">
+    <section id="book-call" className="relative py-24 sm:py-32 lg:py-40 bg-background border-t border-divider overflow-hidden" style={{ backgroundColor: '#06080F', borderTopColor: '#1A2540' }}>
+      <div className="orb w-[500px] h-[500px] animate-float-slower" style={{ background: 'radial-gradient(circle, rgba(47,111,235,0.1) 0%, transparent 65%)', bottom: '-150px', left: '-100px', animationDelay: '2s' }} />
+      <div className="max-w-6xl mx-auto px-6 sm:px-10 relative z-10">
         {/* CTA Header */}
         <div className="text-center mb-16 max-w-2xl mx-auto">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">The Next Step</p>
-          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-slate-900 mb-6">
+          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-ink mb-6" style={{ color: '#E8EEFF' }}>
             Book a Call That's Actually Worth Your Time.
           </h2>
-          <p className="text-slate-500 text-base sm:text-lg leading-relaxed">
+          <p className="text-muted text-base sm:text-lg leading-relaxed" style={{ color: '#64748B' }}>
             We'll look at your current setup, how you're handling inbound leads, and where you're losing jobs. Then we'll tell you honestly whether this is a fit.
           </p>
         </div>
@@ -1016,10 +1102,10 @@ function ContactForm() {
             { icon: '⚡', strong: 'Fast turnaround', label: '— timeline confirmed on your call' },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-sm bg-white border border-slate-200 flex items-center justify-center text-base flex-shrink-0">
+              <div className="w-9 h-9 rounded-sm bg-surface border border-divider flex items-center justify-center text-base flex-shrink-0">
                 {item.icon}
               </div>
-              <span className="text-sm text-slate-500"><span className="text-slate-900 font-semibold">{item.strong}</span>{item.label}</span>
+              <span className="text-sm text-muted"><span className="text-ink font-semibold">{item.strong}</span>{item.label}</span>
             </div>
           ))}
         </div>
@@ -1040,37 +1126,37 @@ function ContactForm() {
                       <Icon className="h-4 w-4 text-primary" strokeWidth={2.2} />
                     </div>
                     <div>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500">{c.label}</p>
-                      <p className="text-sm font-medium text-slate-900 mt-0.5">{c.value}</p>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted">{c.label}</p>
+                      <p className="text-sm font-medium text-ink mt-0.5">{c.value}</p>
                     </div>
                   </div>
                 )
                 return c.href ? <a key={i} href={c.href} className="lift-on-hover">{inner}</a> : <div key={i}>{inner}</div>
               })}
             </div>
-            <div className="p-5 rounded-2xl border border-slate-200 bg-white">
+            <div className="p-5 rounded-2xl border border-divider bg-surface" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
               <div className="flex items-center gap-2 mb-2">
                 <ShieldCheck className="h-4 w-4 text-primary" strokeWidth={2.2} />
-                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500">No pressure</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted" style={{ color: '#64748B' }}>No pressure</span>
               </div>
-              <p className="text-xs text-slate-500 leading-relaxed">No contracts to sign on the call. No commitment. Just the conversation.</p>
+              <p className="text-xs text-muted leading-relaxed" style={{ color: '#64748B' }}>No contracts to sign on the call. No commitment. Just the conversation.</p>
             </div>
           </div>
 
           {/* Right — form */}
           <div className="lg:col-span-7">
             {status === 'sent' ? (
-              <div className="rounded-2xl bg-white border border-slate-200 p-12 flex flex-col items-center justify-center text-center min-h-[440px]">
+              <div className="rounded-2xl bg-surface border border-divider p-12 flex flex-col items-center justify-center text-center min-h-[440px]">
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
                   <CheckCircle2 className="h-8 w-8 text-primary" strokeWidth={2} />
                 </div>
-                <h3 className="font-display font-black text-2xl text-slate-900 mb-3 tracking-tight">We'll be in touch.</h3>
-                <p className="text-slate-500 max-w-sm leading-relaxed text-sm">
+                <h3 className="font-display font-black text-2xl text-ink mb-3 tracking-tight">We'll be in touch.</h3>
+                <p className="text-muted max-w-sm leading-relaxed text-sm">
                   Expect an email within one business day to schedule your free strategy call.
                 </p>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="rounded-2xl bg-white border border-slate-200 p-8 sm:p-10">
+              <form onSubmit={onSubmit} className="rounded-2xl bg-surface border border-divider p-8 sm:p-10" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
                 <div className="grid sm:grid-cols-2 gap-5 mb-5">
                   {[
                     { id: 'name',    label: 'Full Name',      type: 'text',  placeholder: 'John Smith' },
@@ -1079,22 +1165,21 @@ function ContactForm() {
                     { id: 'company', label: 'Company Name',   type: 'text',  placeholder: 'Smith General Contracting' },
                   ].map(f => (
                     <div key={f.id}>
-                      <label htmlFor={f.id} className="block font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500 mb-2">{f.label}</label>
+                      <label htmlFor={f.id} className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">{f.label}</label>
                       <input id={f.id} name={f.id} type={f.type} placeholder={f.placeholder} required
-                        className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-500/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all" />
+                        className="w-full bg-surface border border-divider rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
+                        style={{ backgroundColor: '#0C1220', borderColor: '#1A2540', color: '#E8EEFF' }} />
                     </div>
                   ))}
                 </div>
 
                 <div className="mb-5">
-                  <label htmlFor="revenue" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500 mb-2">Monthly Revenue</label>
-                  <select id="revenue" name="revenue" required
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all">
+                  <label htmlFor="revenue" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">Roughly what's your monthly revenue?</label>
+                  <select id="revenue" name="revenue" required value={revenue} onChange={e => setRevenue(e.target.value)}
+                    className="w-full min-h-[44px] bg-surface border border-divider rounded-lg px-4 py-3 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
+                    style={{ backgroundColor: '#0C1220', borderColor: '#1A2540', color: '#E8EEFF' }}>
                     <option value="">Select your range</option>
-                    <option value="under-30k">Under $30K/month</option>
-                    <option value="30k-80k">$30K–$80K/month</option>
-                    <option value="80k-170k">$80K–$170K/month</option>
-                    <option value="170k-plus">$170K+/month</option>
+                    {REVENUE_BRACKETS.map(b => <option key={b.value} value={b.value}>{b.label}</option>)}
                   </select>
                 </div>
 
@@ -1109,38 +1194,80 @@ function ContactForm() {
                       'Missed Call Text-Back',
                       'Lead Re-Engagement',
                     ].map((service) => (
-                      <label key={service} className="flex items-center gap-3 p-3 rounded-xl border border-divider bg-background cursor-pointer hover:border-primary/40 transition-colors">
+                      <label key={service} className="flex items-center gap-3 p-3 rounded-xl border border-divider bg-background cursor-pointer hover:border-primary/40 transition-colors" style={{ backgroundColor: '#06080F', borderColor: '#1A2540' }}>
                         <input type="checkbox" name="services" value={service}
                           className="w-4 h-4 rounded accent-primary flex-shrink-0" />
-                        <span className="text-sm text-ink">{service}</span>
+                        <span className="text-sm text-ink" style={{ color: '#E8EEFF' }}>{service}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div className="sm:col-span-2 mb-5">
-                  <label htmlFor="projectValue" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">Average Project Value</label>
-                  <select id="projectValue" name="projectValue"
-                    className="w-full bg-background border border-divider rounded-xl px-4 py-3 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/60 transition-all">
+                  <label htmlFor="projectValue" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">What's your average project value?</label>
+                  <select id="projectValue" name="projectValue" value={projectVal} onChange={e => setProjectVal(e.target.value)}
+                    className="w-full min-h-[44px] bg-surface border border-divider rounded-lg px-4 py-3 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
+                    style={{ backgroundColor: '#0C1220', borderColor: '#1A2540', color: '#E8EEFF' }}>
                     <option value="">Select your average job size</option>
-                    <option value="25k-50k">$25K – $50K</option>
-                    <option value="50k-75k">$50K – $75K</option>
-                    <option value="75k-100k">$75K – $100K</option>
-                    <option value="100k-150k">$100K – $150K</option>
-                    <option value="150k-200k">$150K – $200K</option>
-                    <option value="200k-plus">$200K+</option>
+                    {PROJECT_VALUE_BRACKETS.map(b => <option key={b.value} value={b.value}>{b.label}</option>)}
                   </select>
                 </div>
 
+                <div className="mb-5">
+                  <label htmlFor="callVolume" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">
+                    How many calls does your office get per month?
+                  </label>
+                  <select
+                    id="callVolume"
+                    name="callVolume"
+                    value={callVolume}
+                    onChange={e => setCallVolume(e.target.value)}
+                    className="w-full min-h-[44px] bg-surface border border-divider rounded-lg px-4 py-3 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
+                    style={{ backgroundColor: '#0C1220', borderColor: '#1A2540', color: '#E8EEFF' }}
+                  >
+                    <option value="">Select call volume</option>
+                    {CALL_VOLUME_BRACKETS.map(b => (
+                      <option key={b.value} value={b.value}>{b.label}</option>
+                    ))}
+                  </select>
+
+                  {roiCalc && (
+                    <div aria-live="polite" className="mt-3 px-5 py-4 rounded-xl bg-primary/5 border border-primary/20">
+                      <p className="text-xs text-muted mb-1">You could be missing out on an estimated</p>
+                      <div className="flex items-baseline gap-1 mb-1">
+                        <span className="font-display font-black text-2xl sm:text-3xl text-primary tracking-tight">
+                          {displayedROI >= 1_000_000
+                            ? `$${(displayedROI / 1_000_000).toFixed(2)}M`
+                            : `$${displayedROI.toLocaleString()}`}
+                        </span>
+                        <span className="text-base font-semibold text-primary">/mo</span>
+                        <span className="text-xs text-muted ml-1">in projects from missed calls.</span>
+                      </div>
+                      <p className="text-[11px] text-white/40 leading-relaxed mb-1">
+                        ~{roiCalc.lostCallers} missed callers a month → roughly {roiCalc.lostProjects} lost {roiCalc.lostProjects === 1 ? 'project' : 'projects'} × ${roiCalc.projectValue.toLocaleString()} average project
+                      </p>
+                      <p className="text-[11px] text-white/40 leading-relaxed italic">
+                        {roiCalc.ratio < 0.25
+                          ? `That's an extra ${Math.round(roiCalc.ratio * 100)}% on top of your current monthly revenue.`
+                          : roiCalc.ratio < 1
+                            ? `That's ${Math.round(roiCalc.ratio * 100)}% of your current monthly revenue walking out the door.`
+                            : `That's enough demand to double your business — every one of those callers hired someone else.`
+                        }
+                      </p>
+                    </div>
+                  )}
+                </div>
+
                 <div className="mb-6">
-                  <label htmlFor="message" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500 mb-2">Tell us about your business</label>
+                  <label htmlFor="message" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">Tell us about your business</label>
                   <textarea id="message" name="message" rows={4}
                     placeholder="How many calls do you miss per week? What CRM do you use? What's your biggest bottleneck?"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-500/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all resize-none" />
+                    className="w-full bg-surface border border-divider rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all resize-none"
+                    style={{ backgroundColor: '#0C1220', borderColor: '#1A2540', color: '#E8EEFF' }} />
                 </div>
 
                 <button type="submit" disabled={status === 'sending'}
-                  className="magnetic-btn w-full inline-flex items-center justify-center gap-2 bg-primary text-white py-4 rounded-xl font-semibold shadow-lg shadow-primary/30 disabled:opacity-60 transition-opacity">
+                  className="magnetic-btn btn-shimmer w-full inline-flex items-center justify-center gap-2 text-white py-4 rounded-xl font-semibold shadow-xl shadow-primary/25 disabled:opacity-60 transition-opacity">
                   {status === 'sending' ? (
                     <><Activity className="h-4 w-4 animate-pulse" strokeWidth={2.4} /> Sending…</>
                   ) : (
@@ -1159,7 +1286,7 @@ function ContactForm() {
 // ─── Footer ───────────────────────────────────────────────────────────────────
 function Footer() {
   return (
-    <footer className="bg-deep text-white py-14 sm:py-18 border-t border-white/5">
+    <footer className="bg-deep text-white py-14 sm:py-18 border-t border-divider" style={{ backgroundColor: '#030407', borderTopColor: '#1A2540' }}>
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
@@ -1219,7 +1346,7 @@ function Footer() {
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
   useEffect(() => {
-    const id = setTimeout(() => ScrollTrigger.refresh(), 200)
+    const id = setTimeout(() => ScrollTrigger.refresh(), 500)
     return () => clearTimeout(id)
   }, [])
 
