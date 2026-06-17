@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
-  ArrowUpRight, Phone, Menu, X, Bot, CalendarCheck,
+  ArrowUpRight, Phone, Menu, X, CalendarCheck,
   ShieldCheck, Clock, CheckCircle2, Mail, MapPin,
-  Activity, RefreshCw, Settings, ChevronRight,
-  PhoneCall, FileText, BarChart3, CreditCard, Star, Zap, MessageSquare,
+  Activity, Settings, ChevronRight,
+  FileText, BarChart3, Star, Zap, Megaphone,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -24,12 +24,12 @@ const NAV_LINKS = [
 ]
 
 const SERVICES = [
-  { icon: Phone,        title: 'AI Voice Receptionist', text: 'Answers every inbound call 24/7, qualifies the lead, captures project details, and books the estimate directly on your calendar. No voicemail. No missed jobs.' },
-  { icon: FileText,     title: 'Quote Follow-Up Agent', text: 'Automatically follows up on every estimate that goes cold — without you touching anything. Converts dead quotes into booked jobs.' },
-  { icon: CalendarCheck,title: 'Estimate Booking', text: 'Homeowners book directly into your calendar during the call. No phone tag, no back-and-forth, no lost appointments.' },
-  { icon: Star,         title: 'Google Review Agent', text: 'Post-job review requests sent automatically via SMS. More reviews means higher Google ranking means more inbound calls.' },
-  { icon: MessageSquare,title: 'Missed Call Text-Back', text: 'Instant SMS fires to any caller you missed before they open Google and call the next contractor on the list.' },
-  { icon: BarChart3,    title: 'Lead Re-Engagement', text: 'Automatically re-contacts old leads who went cold at 3, 6, and 12 months. Dormant pipeline activated at zero ad spend.' },
+  { icon: Megaphone,    title: 'Targeted Facebook Ads', text: 'Ads targeting homeowners in your service area who need roofing work right now — not cold outreach, not door knocking. Hot inbound leads.' },
+  { icon: Phone,        title: '30-Second AI Callback', text: 'Every form submit triggers an AI callback within 30 seconds — before they open Google and call the next roofer on the list.' },
+  { icon: CheckCircle2, title: 'Lead Qualification', text: 'The AI qualifies every lead on the call — roof type, damage, timeline, homeowner vs renter — so your time is only spent on real jobs.' },
+  { icon: CalendarCheck,title: 'Estimate Booking', text: 'Qualified leads drop straight into your calendar with all the details. You show up to the estimate ready to close.' },
+  { icon: Zap,          title: 'Storm Season Surge', text: 'Storm hits? We scale your ads up instantly to capture every homeowner who just saw damage. You\'re the first roofer calling.' },
+  { icon: BarChart3,    title: 'Monthly Optimization', text: 'We review lead quality and ad performance every month — cutting what doesn\'t convert, doubling down on what does.' },
 ]
 
 // ─── CountUp ──────────────────────────────────────────────────────────────────
@@ -59,7 +59,7 @@ function CountUp({ end, suffix = '', prefix = '', duration = 2000 }) {
   return <span ref={ref} className="tabular-nums">{prefix}{value}{suffix}</span>
 }
 
-// ─── SignatureAnim — AI Call Pipeline (4 phases) ──────────────────────────────
+// ─── SignatureAnim — Lead Pipeline (4 phases) ─────────────────────────────────
 function SignatureAnim() {
   const [phase, setPhase] = useState(0)
 
@@ -69,10 +69,10 @@ function SignatureAnim() {
   }, [])
 
   const phases = [
-    { step: '01', label: 'Incoming Call',   sub: 'Sarah M. · Kitchen remodel', detail: 'Ringing now…' },
-    { step: '02', label: 'Agent Answering', sub: 'AI connected · 0.8s delay',  detail: 'Qualifying lead…' },
-    { step: '03', label: 'Lead Qualified',  sub: 'Budget $18K · 8 weeks out',  detail: 'Booking estimate…' },
-    { step: '04', label: 'Estimate Booked', sub: 'Thu 10am · confirmed',        detail: 'Calendar updated ✓' },
+    { step: '01', label: 'Ad Seen',        sub: 'Mike D. · Storm damage · Orlando', detail: 'Lead filling form…' },
+    { step: '02', label: 'Lead Captured',  sub: 'Form submitted · 11:42am',         detail: 'Calling back now…' },
+    { step: '03', label: 'AI Connected',   sub: 'Called back in 28s · Qualifying',  detail: 'Booking estimate…' },
+    { step: '04', label: 'Estimate Set',   sub: 'Thu 10am · confirmed',             detail: 'Calendar updated ✓' },
   ]
 
   return (
@@ -85,7 +85,7 @@ function SignatureAnim() {
       `}</style>
 
       <div className="px-4 pt-3 pb-2 flex items-center justify-between border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-        <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: '#2F6FEB' }}>AI Call Pipeline</span>
+        <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: '#2F6FEB' }}>Lead Pipeline</span>
         <span className="font-mono text-[9px]" style={{ color: 'rgba(255,255,255,0.3)' }}>Live</span>
       </div>
 
@@ -119,9 +119,9 @@ function SignatureAnim() {
 // ─── Lead Flow Shuffler — Animated Stat Counter ───────────────────────────────
 function LeadFlowShuffler() {
   const stats = [
-    { value: 5,  suffix: '',  prefix: '',  label: 'Calls missed this week',       color: '#ef4444' },
-    { value: 47, suffix: 'K', prefix: '$', label: '1 job closed = $47K avg revenue', color: '#2F6FEB' },
-    { value: 15, suffix: 'x', prefix: '',  label: 'Average ROI in year one',      color: '#22c55e' },
+    { value: 80, suffix: '%', prefix: '',  label: 'Homeowners go with the first roofer to call them back', color: '#ef4444' },
+    { value: 72, suffix: '%', prefix: '',  label: 'Research online before ever picking up the phone',        color: '#2F6FEB' },
+    { value: 3,  suffix: 'x', prefix: '',  label: 'More jobs for roofers running targeted local ads',        color: '#22c55e' },
   ]
   const [statIdx, setStatIdx] = useState(0)
   const [count, setCount] = useState(0)
@@ -180,10 +180,10 @@ function LeadFlowShuffler() {
 // ─── Live Feed Ticker ─────────────────────────────────────────────────────────
 function LiveFeedTicker() {
   const feeds = [
-    { text: 'New lead — kitchen remodel — booked in 42s', time: 'just now' },
-    { text: 'Missed call recovered — John B. · roof replacement', time: '2 min ago' },
-    { text: 'Quote follow-up sent — $34K job reactivated', time: '5 min ago' },
-    { text: 'Review requested — 5-star response received', time: '8 min ago' },
+    { text: 'New roofing lead — hail damage — estimate booked in 28s', time: 'just now' },
+    { text: 'Facebook ad → lead in → called back in 22 seconds', time: '3 min ago' },
+    { text: 'New lead — full reroof — $14K job scheduled Thu 9am', time: '6 min ago' },
+    { text: 'Storm surge — 4 new leads in 90 minutes — all qualified', time: '11 min ago' },
   ]
   const [current, setCurrent] = useState(0)
 
@@ -271,24 +271,24 @@ function AIScheduler() {
   )
 }
 
-// ─── Missed Call Card ─────────────────────────────────────────────────────────
-function MissedCallCard() {
+// ─── New Lead Card ────────────────────────────────────────────────────────────
+function NewLeadCard() {
   return (
     <div className="rounded-2xl glass-card p-6 shadow-2xl shadow-black/60 max-w-sm w-full">
       {/* Header */}
       <div className="flex items-center gap-2.5 mb-4">
-        <div className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
-        <span className="font-mono text-[10px] text-red-400 uppercase tracking-wider">Missed Call</span>
-        <span className="font-mono text-[10px] text-muted ml-auto">2 mins ago</span>
+        <div className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
+        <span className="font-mono text-[10px] text-green-400 uppercase tracking-wider">New Facebook Lead</span>
+        <span className="font-mono text-[10px] text-muted ml-auto">30 sec ago</span>
       </div>
       {/* Caller */}
-      <p className="font-body font-semibold text-ink text-base mb-1">Sarah M.</p>
-      <p className="font-body text-sm text-muted mb-5">Kitchen remodel · 1,200 sq ft</p>
+      <p className="font-body font-semibold text-ink text-base mb-1">Mike D.</p>
+      <p className="font-body text-sm text-muted mb-5">Hail damage · Full reroof · Orlando</p>
       {/* Divider */}
       <div className="h-px bg-divider mb-5" />
       {/* Resolved rows */}
       <div className="flex flex-col gap-3 mb-5">
-        {['AI Agent answered', 'Lead qualified', 'Estimate booked'].map((item, i) => (
+        {['Called back in 28 seconds', 'Lead qualified', 'Estimate booked Thu 2pm'].map((item, i) => (
           <div key={i} className="flex items-center gap-2.5">
             <div className="w-4 h-4 rounded-full bg-green-500/15 flex items-center justify-center flex-shrink-0">
               <CheckCircle2 className="h-2.5 w-2.5 text-green-400" strokeWidth={2.5} />
@@ -300,7 +300,7 @@ function MissedCallCard() {
       {/* Badge */}
       <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-green-400 bg-green-500/10 border border-green-500/20 px-3 py-1.5 rounded-full">
         <div className="w-1.5 h-1.5 rounded-full bg-green-400 ring-pulse" />
-        Handled automatically
+        Before competitor ever called
       </span>
     </div>
   )
@@ -335,7 +335,7 @@ function Navbar() {
           <div className="flex items-center gap-3">
             <a href="#book-call"
               className="hidden sm:inline-flex magnetic-btn items-center gap-1.5 bg-primary text-white text-sm font-semibold px-5 py-2.5 rounded-sm shadow-lg shadow-primary/20 tracking-wide uppercase">
-              Book a Call <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+              Get More Jobs <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.5} />
             </a>
             <button onClick={() => setOpen(true)} className="lg:hidden p-2 text-muted hover:text-ink transition-colors" aria-label="Open menu">
               <Menu className="h-5 w-5" />
@@ -364,7 +364,7 @@ function Navbar() {
           <div className="mt-auto">
             <a href="#book-call" onClick={() => setOpen(false)}
               className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-4 rounded-sm w-full justify-center shadow-lg shadow-primary/20 uppercase tracking-wide">
-              Book a Call <ArrowUpRight className="h-4 w-4" />
+              Get More Roofing Jobs <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>
         </div>
@@ -429,28 +429,28 @@ function Hero() {
         {/* Left */}
         <div className="flex-1">
           <span className="hero-eyebrow font-mono text-[10px] uppercase tracking-[0.25em] text-primary block mb-6">
-            The Contractor Growth System
+            The Roofing Lead System
           </span>
           <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-8xl text-white tracking-tight leading-[0.95] mb-8">
-            <span className="hero-line-1 block">Your Phone Rings.</span>
-            <span className="hero-line-2 block">You're On a Job Site.</span>
-            <span className="hero-line-3 block gradient-text">That Lead Just Called<br className="hidden sm:block" /> Your Competitor.</span>
+            <span className="hero-line-1 block">More Qualified</span>
+            <span className="hero-line-2 block">Roofing Jobs.</span>
+            <span className="hero-line-3 block gradient-text">Zero Cold<br className="hidden sm:block" /> Outreach.</span>
           </h1>
           <p className="hero-sub font-body text-base sm:text-lg text-white/65 leading-relaxed max-w-lg mb-10">
-            Your phone rings. You're on a roof. That homeowner calls the next contractor on Google. Cornerstone Growth answers every call, qualifies every lead, and books every estimate — 24/7, even when you can't pick up.
+            We run targeted Facebook ads and call every new lead back within 30 seconds — so you're always the first roofer they talk to, not the fourth.
           </p>
           <div className="hero-cta flex flex-col sm:flex-row gap-3 items-start">
             <a href="#book-call"
               className="magnetic-btn btn-shimmer inline-flex items-center gap-2 text-white px-7 py-4 rounded-sm font-semibold shadow-xl shadow-primary/30 text-sm uppercase tracking-wide">
-              Book a Free Strategy Call <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
+              See How It Works <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
             </a>
           </div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/60 mt-4">Built for general contractors · AI voice agents · Never miss a call</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/60 mt-4">Built for roofing contractors · Facebook ads + AI callback · Exclusive leads</p>
         </div>
 
-        {/* Right — missed call card */}
+        {/* Right — new lead card */}
         <div className="hero-card flex-shrink-0">
-          <MissedCallCard />
+          <NewLeadCard />
         </div>
       </div>
       <LiveFeedTicker />
@@ -479,29 +479,29 @@ function Features() {
         <div className="mb-14">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Platform</p>
           <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-ink max-w-2xl" style={{ color: '#E8EEFF' }}>
-            What the system does <span className="font-serif italic font-medium text-primary-light" style={{ color: '#5C93F5' }}>while you work.</span>
+            What the system does <span className="font-serif italic font-medium text-primary-light" style={{ color: '#5C93F5' }}>while you're on a roof.</span>
           </h2>
           <p className="mt-4 text-muted text-base sm:text-lg max-w-xl leading-relaxed" style={{ color: '#64748B' }}>
-            Three modules working in parallel — so no lead falls through the cracks while you're on site.
+            Ads running, leads coming in, callbacks firing — all while you're on a job site.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="feature-card glow-card rounded-2xl bg-surface border border-divider p-6 sm:p-8" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2" style={{ color: '#64748B' }}>Lead Flow</p>
-            <h3 className="font-display text-xl font-black text-ink mb-4 tracking-tight" style={{ color: '#E8EEFF' }}>From ring to booked</h3>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2" style={{ color: '#64748B' }}>Lead Stats</p>
+            <h3 className="font-display text-xl font-black text-ink mb-4 tracking-tight" style={{ color: '#E8EEFF' }}>By the numbers</h3>
             <LeadFlowShuffler />
             <p className="mt-4 text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>
-              Every call triggers an instant response sequence. The AI qualifies, responds, and books — without any human intervention.
+              Speed and visibility win roofing jobs. We make sure you show up first and call back fastest.
             </p>
           </div>
 
           <div className="feature-card glow-card rounded-2xl bg-surface border border-divider p-6 sm:p-8" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2" style={{ color: '#64748B' }}>AI Pipeline</p>
-            <h3 className="font-display text-xl font-black text-ink mb-4 tracking-tight" style={{ color: '#E8EEFF' }}>Live automation</h3>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2" style={{ color: '#64748B' }}>Lead Pipeline</p>
+            <h3 className="font-display text-xl font-black text-ink mb-4 tracking-tight" style={{ color: '#E8EEFF' }}>From ad to booked</h3>
             <SignatureAnim />
             <p className="mt-4 text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>
-              Real-time processing of every call, lead, and follow-up — running in parallel across everything in your pipeline.
+              Every lead that comes in gets called within 30 seconds, qualified, and booked — automatically.
             </p>
           </div>
 
@@ -510,7 +510,7 @@ function Features() {
             <h3 className="font-display text-xl font-black text-ink mb-4 tracking-tight" style={{ color: '#E8EEFF' }}>Estimates booked instantly</h3>
             <AIScheduler />
             <p className="mt-4 text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>
-              The agent finds the next open slot and books the estimate in real time — no phone tag, no back-and-forth.
+              The AI finds the next open slot and books the estimate in real time — no phone tag, no back-and-forth.
             </p>
           </div>
         </div>
@@ -522,9 +522,9 @@ function Features() {
 // ─── Pillars ──────────────────────────────────────────────────────────────────
 function Pillars() {
   const pillars = [
-    { eyebrow: 'The core problem', stat: '60%+', desc: 'Of calls go unanswered at the average contracting business while the owner is on a job site. Every missed call is a job going to whoever picks up.' },
-    { eyebrow: 'Never call back', stat: '85%', desc: "Of homeowners who don't get an answer on the first try never call back. And 78% go with whoever responds first. Speed wins every time." },
-    { eyebrow: 'Revenue at stake', stat: '$45K–$120K', desc: 'Lost every year at the average contracting business from missed calls alone. One recovered job pays for the entire system.' },
+    { eyebrow: 'Speed wins', stat: '80%', desc: 'Of homeowners go with the first roofer to call them back. It\'s not about being the best — it\'s about being first. We make sure that\'s you.' },
+    { eyebrow: 'They research online', stat: '72%', desc: 'Of homeowners look online before ever picking up the phone. If you\'re not showing up in their feed when storm damage is fresh, you\'re invisible.' },
+    { eyebrow: 'Ads change the math', stat: '3x', desc: 'More roofing jobs for contractors running targeted local ads compared to referrals alone. One good storm season campaign pays for itself many times over.' },
   ]
 
   return (
@@ -563,31 +563,31 @@ function Problem() {
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">The Reality</p>
             <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-ink mb-8" style={{ color: '#E8EEFF' }}>
-              You Can't Answer Calls While Managing a Crew. That's Not a Flaw — It's Just the Job.
+              Your Crew Is on Rooftops All Day. That Homeowner Isn't Going to Wait.
             </h2>
             <div className="flex flex-col gap-6">
               <p className="text-base sm:text-lg text-muted leading-relaxed" style={{ color: '#64748B' }}>
-                You're on a slab at 7am. On a roof at 2pm. Managing a crew at 4. Your phone rings and you can't pick up. That homeowner calls the next contractor on Google.
+                You're up on a roof at 7am. Running material at noon. Closing out a job at 4. Storm hits Thursday. Your phone blows up with 40 calls and you catch maybe 8 of them.
               </p>
               <p className="text-base sm:text-lg text-muted leading-relaxed" style={{ color: '#64748B' }}>
-                It's not a sales problem. It's a structural one. The contractors winning in your market aren't better than you — they just have a system that answers when they can't.
+                The roofer who answers first gets the job. That's not an opinion — that's how homeowners work. If you're not the one calling them back in 30 seconds, someone else is.
               </p>
               <p className="text-base sm:text-lg font-semibold text-ink leading-relaxed" style={{ color: '#E8EEFF' }}>
-                That's what we build.
+                Most roofers still rely on referrals and hope. We built something better.
               </p>
             </div>
           </div>
 
           {/* Visual timeline */}
           <div className="rounded-2xl bg-surface border border-divider p-8 glow-card" style={{ backgroundColor: '#0C1220', borderColor: '#1A2540' }}>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-6" style={{ color: '#64748B' }}>A typical Tuesday</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-6" style={{ color: '#64748B' }}>A typical storm week</p>
             <div className="flex flex-col gap-0">
               {[
-                { time: '7:04am', text: "You're on a slab. Phone buzzes — unknown number. Can't pick up.", color: '#64748B' },
-                { time: '7:05am', text: 'Homeowner hangs up. No voicemail. Calls the next result on Google.', color: '#f87171' },
+                { time: '7:04am', text: "You're on a roof. Phone buzzes — homeowner saw hail damage last night. Can't pick up.", color: '#64748B' },
+                { time: '7:05am', text: 'Homeowner hangs up. Googles "roof repair near me." Calls the next result.', color: '#f87171' },
                 { time: '7:06am', text: 'Your competitor picks up. Estimate scheduled for Thursday.', color: '#f87171' },
-                { time: '11:30am', text: 'You call back. Goes to voicemail. They never return your call.', color: '#64748B' },
-                { time: 'With CG', text: 'Call answered instantly. Lead qualified. Estimate on your calendar.', color: '#2F6FEB' },
+                { time: '11:30am', text: 'You call back. Goes to voicemail. They already signed with someone else.', color: '#64748B' },
+                { time: 'With CG', text: 'Your ad hits them first. AI calls back in 28 seconds. Estimate on your calendar.', color: '#2F6FEB' },
               ].map((item, i) => (
                 <div key={i}>
                   <div className="flex gap-4 py-4">
@@ -622,19 +622,19 @@ function Solution() {
 
   const cards = [
     {
-      icon: <PhoneCall className="h-6 w-6 text-primary" strokeWidth={2.2} />,
-      title: 'Never Miss a Call',
-      text: 'Answers every inbound call instantly — day, night, weekends. Qualifies the lead, gets their project details, and books the estimate directly on your calendar.',
+      icon: <Megaphone className="h-6 w-6 text-primary" strokeWidth={2.2} />,
+      title: 'Part 1: Facebook Ads That Find the Jobs',
+      text: 'We run targeted ads in your service area aimed at homeowners actively looking for roofing work — storm damage, replacements, leaks. Hot leads, not cold lists.',
     },
     {
-      icon: <RefreshCw className="h-6 w-6 text-primary" strokeWidth={2.2} />,
-      title: 'Follows Up on Dead Quotes',
-      text: 'Sent out 10 estimates last month? Only heard back from 4? The agent follows up automatically on every quote that goes cold — without you touching anything.',
+      icon: <Phone className="h-6 w-6 text-primary" strokeWidth={2.2} />,
+      title: 'Part 2: 30-Second AI Callback',
+      text: 'The second a lead fills out a form, our AI calls them back — within 30 seconds. It qualifies the job, gets the details, and books the estimate directly on your calendar.',
     },
     {
-      icon: <Settings className="h-6 w-6 text-primary" strokeWidth={2.2} />,
-      title: 'Trained on Your Business',
-      text: 'Not a generic bot. Trained on your service area, your project types, and how you want to talk to homeowners. It sounds like your business — because it is.',
+      icon: <Star className="h-6 w-6 text-primary" strokeWidth={2.2} />,
+      title: 'Exclusive Leads. Only Yours.',
+      text: 'Every lead we generate is exclusive to your business. We don\'t sell the same homeowner to three roofers. You\'re not bidding against a competitor on your own lead.',
     },
   ]
 
@@ -644,7 +644,7 @@ function Solution() {
         <div className="mb-14">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">What We Build</p>
           <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight max-w-3xl" style={{ color: '#E8EEFF' }}>
-            A 24/7 Voice Agent That Runs Your Phone Like a Full-Time Receptionist.
+            A Two-Part System That Brings You Roofing Jobs on Autopilot.
           </h2>
         </div>
 
@@ -685,32 +685,32 @@ function Protocol() {
       num: '01',
       eyebrow: 'Discovery',
       title: 'We learn your business',
-      body: "Your call flow, your project types, your service area, and how you handle leads. One call. That's it.",
-      bullets: ['Service area, project types, and crew size', 'How you qualify and follow up on leads today', 'Calendar setup — Jobber, BuilderTrend, or Google Calendar'],
+      body: "Your service area, the jobs you want more of, how you currently get leads, and what your busy season looks like. One call. That's it.",
+      bullets: ['Service area, project types, and average job value', 'Current lead sources — referrals, Google, nothing?', 'Storm season timing and surge capacity'],
       img: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&q=80&auto=format&fit=crop',
     },
     {
       num: '02',
-      eyebrow: 'Build',
-      title: 'We build and train the agent',
-      body: 'Trained on your business — your voice, your tone, your process. Done fast. Not a generic template.',
-      bullets: ['Custom response scripts in your voice', 'Trained on your specific project types', 'Integrated with your calendar'],
+      eyebrow: 'Build & Launch',
+      title: 'We build and launch the system',
+      body: 'Facebook ad campaign built for your market. AI callback configured for your business. Live in days, not weeks.',
+      bullets: ['Ad creative written for your service area and job types', 'AI callback trained to qualify roofing leads specifically', 'Integrated with your calendar — Google, Jobber, or anything else'],
       img: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=900&q=80&auto=format&fit=crop',
     },
     {
       num: '03',
-      eyebrow: 'Test',
-      title: 'You test it yourself',
-      body: "Call the number. Pretend you're a homeowner. Tell us what to change. We don't go live until you're completely satisfied.",
-      bullets: ['You call it yourself before launch', 'Unlimited revisions pre-launch', "We don't flip the switch until you approve"],
+      eyebrow: 'You Test It',
+      title: 'Leads come in — you verify it works',
+      body: "You'll see the first leads within 48 hours. Review them, check the callback recordings, tell us what to adjust. We don't call it done until you're satisfied.",
+      bullets: ['First leads typically in 24–48 hours of launch', 'You get recordings of every AI callback call', 'Tell us what to change — we adjust fast'],
       img: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=80&auto=format&fit=crop',
     },
     {
       num: '04',
-      eyebrow: 'Live 24/7',
-      title: 'Your number is covered',
-      body: 'Around the clock. We manage it, monitor it, and optimize it every month. You focus on the job site.',
-      bullets: ['24/7 inbound call coverage', 'Monthly performance review', 'Changes handled within 24 hours'],
+      eyebrow: 'Scale',
+      title: 'We optimize and grow it',
+      body: "Monthly review of lead quality, ad performance, and callback outcomes. We cut what's not converting and scale what is. Storm season? We surge the ads.",
+      bullets: ['Monthly performance review and optimization', 'Storm season surge — we scale fast when you need it', 'Changes and updates handled within 24 hours'],
     },
   ]
 
@@ -719,7 +719,7 @@ function Protocol() {
       <div className="max-w-6xl mx-auto px-6 sm:px-10 pt-24 pb-8">
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">The Process</p>
         <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight max-w-2xl" style={{ color: '#E8EEFF' }}>
-          Fast Turnaround. Zero Tech Knowledge Required.
+          First Leads in 48 Hours. Zero Tech Knowledge Required.
         </h2>
       </div>
 
@@ -800,7 +800,7 @@ function ServicesGrid() {
           </h2>
           <a href="#book-call"
             className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-sm font-semibold text-sm shadow-lg shadow-primary/20 flex-shrink-0 uppercase tracking-wide">
-            Get Started <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
+            Get More Roofing Jobs <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
         </div>
       </div>
@@ -847,18 +847,18 @@ function TrustSignals() {
   const badges = [
     {
       icon: Clock,
-      title: 'Book a strategy call',
-      sub: "We'll look at your call volume, your current setup, and tell you honestly if this makes sense for you. If it doesn't, we'll say that.",
+      title: 'Honest strategy call',
+      sub: "We'll look at your service area, your current lead flow, and tell you honestly if this makes sense for your business. If it doesn't, we'll say that.",
     },
     {
       icon: ShieldCheck,
-      title: 'You own everything',
-      sub: 'Your phone number, your call data, your agent. We build it — you own it. No lock-in, no strings.',
+      title: 'Exclusive leads, always',
+      sub: 'Every lead we generate is yours alone. We never sell the same homeowner to multiple roofers. Your lead is your lead.',
     },
     {
       icon: Zap,
-      title: 'Fast turnaround',
-      sub: "From strategy call to a fully deployed agent running in your business. Timeline confirmed on your call. No IT team, no dev work.",
+      title: 'First leads in 48 hours',
+      sub: 'From strategy call to live campaign. Timeline confirmed on your call. No IT team, no tech setup on your end.',
     },
   ]
 
@@ -869,7 +869,7 @@ function TrustSignals() {
         <div className="text-center mb-14">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Why Cornerstone Growth</p>
           <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight" style={{ color: '#E8EEFF' }}>
-            Built for Contractors. <span className="font-serif italic font-medium" style={{ color: 'rgba(255,255,255,0.3)' }}>Not for everyone.</span>
+            Built for Roofers. <span className="font-serif italic font-medium" style={{ color: 'rgba(255,255,255,0.3)' }}>Not for everyone.</span>
           </h2>
         </div>
         <div className="grid lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
@@ -897,28 +897,28 @@ function FAQ() {
   const [open, setOpen] = useState(null)
   const items = [
     {
-      q: "What happens when I'm on a job site and a lead calls?",
-      a: "The agent answers instantly, qualifies them on the call, captures their project details, and books the estimate directly on your calendar. You finish the job and wake up with appointments already set.",
+      q: "How is this different from HomeAdvisor or Angi?",
+      a: "Night and day. HomeAdvisor sells your lead to 4 roofers at the same time — you're competing on price before you've even had a conversation. Our leads are exclusive. You're the only roofer calling that homeowner.",
     },
     {
-      q: "Will it sound robotic?",
-      a: "No — and that's the most common thing we hear. We train the agent specifically on your business before it ever goes live. Your service area, your project types, how you talk to homeowners. You test it yourself before we launch it. If it doesn't sound right we keep working until it does.",
+      q: "Will the AI callback sound robotic?",
+      a: "No — and that's the most common concern we hear. The AI is trained to qualify roofing leads in plain language: what's damaged, is it leaking, does the homeowner own the property, when do they want someone out. It gets the information you need and books the estimate. You get the recording so you can hear it yourself before it ever goes live.",
     },
     {
-      q: "What if I already use Jobber or BuilderTrend?",
-      a: "It works with whatever system you're already using — whether that's a CRM, a calendar, or just your phone. You don't change anything about how you currently operate. It handles the calls and follow-ups your current setup can't.",
+      q: "What if I already get enough referrals?",
+      a: "Most roofers who say that are still missing calls, not following up on cold quotes, and leaving storm season jobs on the table. We show you exactly what's slipping through — if it's not a fit, we'll tell you. But the roofers saying that in January are usually calling us back in August after watching a competitor dominate storm season.",
     },
     {
-      q: "How much revenue am I actually losing right now?",
-      a: "The average contractor missing 5 calls a week at a $50K job value and closing just 1 of those per month is leaving $50,000 on the table every single month. That's the problem this fixes. One recovered job pays for the entire system.",
+      q: "How fast do leads come in?",
+      a: "Typically within 24–48 hours of launch. Facebook ads start delivering results quickly when the targeting and creative are right — and we've done this enough to know what works in roofing markets.",
     },
     {
-      q: "What if I want to make changes after it's live?",
-      a: "Includes ongoing management, updates, and optimization every month — we stay on it so you don't have to.",
+      q: "What happens after the AI calls them back?",
+      a: "It qualifies the job: roof type, damage description, size, timeline, homeowner vs renter, insurance or cash. If they qualify, it books the estimate directly on your calendar. You show up knowing exactly what you're walking into.",
     },
     {
-      q: "How do I know this will work for my business?",
-      a: "That's exactly what the strategy call is for. We'll look at your call volume, your average job value, and your current setup — and tell you honestly whether this makes sense for you. If it doesn't, we'll tell you that too.",
+      q: "What if I want to pause during slow season?",
+      a: "You control the ad spend. We can pause, scale down, or shift focus to different job types depending on what you need. And when storm season hits, we scale up fast — that's when this system pays for itself many times over.",
     },
   ]
 
@@ -929,7 +929,7 @@ function FAQ() {
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Questions</p>
             <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight text-ink mb-6" style={{ color: '#E8EEFF' }}>
-              Things Contractors Want to Know First.
+              Things Roofers Want to Know First.
             </h2>
             <p className="text-muted leading-relaxed mb-8" style={{ color: '#64748B' }}>
               No sales deck, no case studies from industries you don't work in. Just honest answers.
@@ -968,11 +968,8 @@ function FAQ() {
 
 // ─── ContactForm / Final CTA ──────────────────────────────────────────────────
 
-// Service Direct study: contractors believe they answer 97% of calls; actual answer rate 66%
 const MISS_RATE   = 0.34
-// 85% of callers who hit voicemail never call back — they hire the next contractor
 const NO_CALLBACK = 0.85
-// Industry close rate 20–30%; falls as ticket size rises
 const CLOSE_RATE_BY_PROJECT = {
   under5k:  0.30,
   b5to10k:  0.25,
@@ -1087,19 +1084,19 @@ function ContactForm() {
         <div className="text-center mb-16 max-w-2xl mx-auto">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">The Next Step</p>
           <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-ink mb-6" style={{ color: '#E8EEFF' }}>
-            Book a Call That's Actually Worth Your Time.
+            Get More Roofing Jobs. Starting This Week.
           </h2>
           <p className="text-muted text-base sm:text-lg leading-relaxed" style={{ color: '#64748B' }}>
-            We'll look at your current setup, how you're handling inbound leads, and where you're losing jobs. Then we'll tell you honestly whether this is a fit.
+            We'll look at your service area, your current lead flow, and show you exactly what a targeted ad campaign and 30-second callback system would do for your business.
           </p>
         </div>
 
         {/* Trust row */}
         <div className="flex flex-col sm:flex-row justify-center gap-6 sm:gap-10 mb-16">
           {[
-            { icon: '🕐', strong: 'Book a call', label: '— working session, not a pitch' },
-            { icon: '✓', strong: 'You own everything', label: '— your number, your data, your agent' },
-            { icon: '⚡', strong: 'Fast turnaround', label: '— timeline confirmed on your call' },
+            { icon: '🕐', strong: 'Honest call', label: '— working session, not a pitch' },
+            { icon: '✓', strong: 'Exclusive leads', label: '— never shared with competitors' },
+            { icon: '⚡', strong: 'First leads in 48hrs', label: '— timeline confirmed on your call' },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-sm bg-surface border border-divider flex items-center justify-center text-base flex-shrink-0">
@@ -1117,7 +1114,7 @@ function ContactForm() {
               {[
                 { icon: Phone,  label: 'Phone',    value: '(407) 743-0525', href: 'tel:4077430525' },
                 { icon: Mail,   label: 'Email',    value: 'dylanwang.realestate@gmail.com', href: 'mailto:dylanwang.realestate@gmail.com' },
-                { icon: MapPin, label: 'Location', value: 'Remote — serving contractors nationwide', href: null },
+                { icon: MapPin, label: 'Location', value: 'Central Florida — serving roofing contractors nationwide', href: null },
               ].map((c, i) => {
                 const Icon = c.icon
                 const inner = (
@@ -1160,9 +1157,9 @@ function ContactForm() {
                 <div className="grid sm:grid-cols-2 gap-5 mb-5">
                   {[
                     { id: 'name',    label: 'Full Name',      type: 'text',  placeholder: 'John Smith' },
-                    { id: 'email',   label: 'Email Address',  type: 'email', placeholder: 'john@smithconstruction.com' },
+                    { id: 'email',   label: 'Email Address',  type: 'email', placeholder: 'john@smithroofing.com' },
                     { id: 'phone',   label: 'Phone Number',   type: 'tel',   placeholder: '(555) 000-0000' },
-                    { id: 'company', label: 'Company Name',   type: 'text',  placeholder: 'Smith General Contracting' },
+                    { id: 'company', label: 'Company Name',   type: 'text',  placeholder: 'Smith Roofing LLC' },
                   ].map(f => (
                     <div key={f.id}>
                       <label htmlFor={f.id} className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">{f.label}</label>
@@ -1184,15 +1181,15 @@ function ContactForm() {
                 </div>
 
                 <div className="sm:col-span-2 mb-5">
-                  <label className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-3">Services Interested In</label>
+                  <label className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-3">What are you most interested in?</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {[
-                      'AI Voice Receptionist',
-                      'Quote Follow-Up Agent',
-                      'Estimate Booking',
-                      'Google Review Agent',
-                      'Missed Call Text-Back',
-                      'Lead Re-Engagement',
+                      'Targeted Facebook Ads',
+                      '30-Second AI Callback',
+                      'Lead Qualification System',
+                      'Estimate Booking Automation',
+                      'Storm Season Surge Ads',
+                      'Monthly Optimization',
                     ].map((service) => (
                       <label key={service} className="flex items-center gap-3 p-3 rounded-xl border border-divider bg-background cursor-pointer hover:border-primary/40 transition-colors" style={{ backgroundColor: '#06080F', borderColor: '#1A2540' }}>
                         <input type="checkbox" name="services" value={service}
@@ -1204,7 +1201,7 @@ function ContactForm() {
                 </div>
 
                 <div className="sm:col-span-2 mb-5">
-                  <label htmlFor="projectValue" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">What's your average project value?</label>
+                  <label htmlFor="projectValue" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">What's your average roofing job value?</label>
                   <select id="projectValue" name="projectValue" value={projectVal} onChange={e => setProjectVal(e.target.value)}
                     className="w-full min-h-[44px] bg-surface border border-divider rounded-lg px-4 py-3 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
                     style={{ backgroundColor: '#0C1220', borderColor: '#1A2540', color: '#E8EEFF' }}>
@@ -1215,7 +1212,7 @@ function ContactForm() {
 
                 <div className="mb-5">
                   <label htmlFor="callVolume" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">
-                    How many calls does your office get per month?
+                    How many inbound calls does your business get per month?
                   </label>
                   <select
                     id="callVolume"
@@ -1241,10 +1238,10 @@ function ContactForm() {
                             : `$${displayedROI.toLocaleString()}`}
                         </span>
                         <span className="text-base font-semibold text-primary">/mo</span>
-                        <span className="text-xs text-muted ml-1">in projects from missed calls.</span>
+                        <span className="text-xs text-muted ml-1">in roofing jobs from missed calls.</span>
                       </div>
                       <p className="text-[11px] text-white/40 leading-relaxed mb-1">
-                        ~{roiCalc.lostCallers} missed callers a month → roughly {roiCalc.lostProjects} lost {roiCalc.lostProjects === 1 ? 'project' : 'projects'} × ${roiCalc.projectValue.toLocaleString()} average project
+                        ~{roiCalc.lostCallers} missed callers a month → roughly {roiCalc.lostProjects} lost {roiCalc.lostProjects === 1 ? 'job' : 'jobs'} × ${roiCalc.projectValue.toLocaleString()} average job value
                       </p>
                       <p className="text-[11px] text-white/40 leading-relaxed italic">
                         {roiCalc.ratio < 0.25
@@ -1261,7 +1258,7 @@ function ContactForm() {
                 <div className="mb-6">
                   <label htmlFor="message" className="block font-mono text-[10px] uppercase tracking-[0.15em] text-muted mb-2">Tell us about your business</label>
                   <textarea id="message" name="message" rows={4}
-                    placeholder="How many calls do you miss per week? What CRM do you use? What's your biggest bottleneck?"
+                    placeholder="What's your service area? How do you currently get leads — referrals, Google, nothing? What's your busiest season?"
                     className="w-full bg-surface border border-divider rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all resize-none"
                     style={{ backgroundColor: '#0C1220', borderColor: '#1A2540', color: '#E8EEFF' }} />
                 </div>
@@ -1271,7 +1268,7 @@ function ContactForm() {
                   {status === 'sending' ? (
                     <><Activity className="h-4 w-4 animate-pulse" strokeWidth={2.4} /> Sending…</>
                   ) : (
-                    <>Book Your Free Strategy Call <ArrowUpRight className="h-4 w-4" strokeWidth={2.4} /></>
+                    <>Get More Roofing Jobs <ArrowUpRight className="h-4 w-4" strokeWidth={2.4} /></>
                   )}
                 </button>
               </form>
@@ -1293,7 +1290,7 @@ function Footer() {
           <div className="lg:col-span-2">
             <div className="font-display font-black text-xl text-white tracking-wide mb-3">CORNERSTONE GROWTH</div>
             <p className="text-sm text-white/50 leading-relaxed max-w-xs mb-5">
-              Built for contractors who don't have time to miss calls.
+              More roofing jobs. Less chasing. Built for owner-operated roofing contractors.
             </p>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-primary ring-pulse" />
@@ -1305,7 +1302,7 @@ function Footer() {
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/30 mb-4">System</p>
             <ul className="flex flex-col gap-3">
-              {['24/7 Call Answering', 'Lead Qualification', 'Estimate Booking', 'Quote Follow-Up', 'Monthly Optimization'].map(s => (
+              {['Facebook Ad Campaigns', 'AI Lead Callback', 'Lead Qualification', 'Estimate Booking', 'Monthly Optimization'].map(s => (
                 <li key={s}>
                   <a href="#included" className="text-sm text-white/50 hover:text-white lift-on-hover transition-colors">{s}</a>
                 </li>
@@ -1319,7 +1316,7 @@ function Footer() {
             <ul className="flex flex-col gap-3">
               {[
                 { label: 'How It Works', href: '#process' },
-                { label: 'Book a Call',  href: '#book-call' },
+                { label: 'Get More Jobs',  href: '#book-call' },
                 { label: 'Privacy Policy', href: '/privacy' },
                 { label: 'Terms of Service', href: '/terms' },
               ].map(l => (
