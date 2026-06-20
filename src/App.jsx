@@ -1308,7 +1308,7 @@ function Footer() {
             <ul className="flex flex-col gap-3">
               {['Facebook Ad Campaigns', 'AI Lead Callback', 'Lead Qualification', 'Estimate Booking', 'Monthly Optimization'].map(s => (
                 <li key={s}>
-                  <a href="#included" className="text-sm text-white/50 hover:text-white lift-on-hover transition-colors">{s}</a>
+                  <a href="#included" className="text-sm text-white/50 hover:text-white lift-on-hover transition-colors py-1 inline-block">{s}</a>
                 </li>
               ))}
             </ul>
@@ -1325,7 +1325,7 @@ function Footer() {
                 { label: 'Terms of Service', href: '/terms' },
               ].map(l => (
                 <li key={l.label}>
-                  <a href={l.href} className="text-sm text-white/50 hover:text-white lift-on-hover transition-colors">{l.label}</a>
+                  <a href={l.href} className="text-sm text-white/50 hover:text-white lift-on-hover transition-colors py-1 inline-block">{l.label}</a>
                 </li>
               ))}
             </ul>
@@ -1333,7 +1333,7 @@ function Footer() {
         </div>
 
         <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="font-mono text-[10px] text-white/25">© 2025 Cornerstone Growth. All rights reserved.</p>
+          <p className="font-mono text-[10px] text-white/25">© {new Date().getFullYear()} Cornerstone Growth. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link to="/privacy" className="font-mono text-[10px] text-white/25 hover:text-white/60 transition-colors lift-on-hover">Privacy</Link>
             <Link to="/terms"   className="font-mono text-[10px] text-white/25 hover:text-white/60 transition-colors lift-on-hover">Terms</Link>
