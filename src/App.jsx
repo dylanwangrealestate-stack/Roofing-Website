@@ -814,8 +814,8 @@ function ServicesGrid() {
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
                   <Icon className="h-5 w-5 text-primary" strokeWidth={2.2} />
                 </div>
-                <h3 className="font-display font-black text-base text-ink tracking-tight mb-2" style={{ color: '#E8EEFF' }}>{s.title}</h3>
-                <p className="text-xs text-muted leading-relaxed" style={{ color: '#64748B' }}>{s.text}</p>
+                <h3 className="font-display font-black text-lg text-ink tracking-tight mb-2" style={{ color: '#E8EEFF' }}>{s.title}</h3>
+                <p className="text-sm text-muted leading-relaxed" style={{ color: '#64748B' }}>{s.text}</p>
               </div>
             )
           })}
