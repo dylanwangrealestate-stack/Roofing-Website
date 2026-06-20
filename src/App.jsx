@@ -69,7 +69,7 @@ function SignatureAnim() {
   }, [])
 
   const phases = [
-    { step: '01', label: 'Ad Seen',        sub: 'Mike D. · Storm damage · Orlando', detail: 'Lead filling form…' },
+    { step: '01', label: 'Ad Seen',        sub: 'Mike D. · Storm damage · Dallas, TX', detail: 'Lead filling form…' },
     { step: '02', label: 'Lead Captured',  sub: 'Form submitted · 11:42am',         detail: 'Calling back now…' },
     { step: '03', label: 'AI Connected',   sub: 'Called back in 28s · Qualifying',  detail: 'Booking estimate…' },
     { step: '04', label: 'Estimate Set',   sub: 'Thu 10am · confirmed',             detail: 'Calendar updated ✓' },
@@ -283,7 +283,7 @@ function NewLeadCard() {
       </div>
       {/* Caller */}
       <p className="font-body font-semibold text-ink text-base mb-1">Mike D.</p>
-      <p className="font-body text-sm text-muted mb-5">Hail damage · Full reroof · Orlando</p>
+      <p className="font-body text-sm text-muted mb-5">Hail damage · Full reroof · Dallas, TX</p>
       {/* Divider */}
       <div className="h-px bg-divider mb-5" />
       {/* Resolved rows */}
@@ -1115,7 +1115,7 @@ function ContactForm() {
               {[
                 { icon: Phone,  label: 'Phone',    value: '(407) 743-0525', href: 'tel:4077430525' },
                 { icon: Mail,   label: 'Email',    value: 'dylanwang.realestate@gmail.com', href: 'mailto:dylanwang.realestate@gmail.com' },
-                { icon: MapPin, label: 'Location', value: 'Central Florida — serving roofing contractors nationwide', href: null },
+                { icon: MapPin, label: 'Location', value: 'Remote — serving roofing contractors nationwide', href: null },
               ].map((c, i) => {
                 const Icon = c.icon
                 const inner = (
