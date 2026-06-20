@@ -1070,10 +1070,10 @@ function ContactForm() {
           window.open('https://calendly.com/dylanwang-realestate/30min', '_blank')
         }, 800)
       } else {
-        setStatus('idle')
+        setStatus('error')
       }
     } catch {
-      setStatus('idle')
+      setStatus('error')
     }
   }
 
@@ -1264,6 +1264,9 @@ function ContactForm() {
                     style={{ backgroundColor: '#0C1220', borderColor: '#1A2540', color: '#E8EEFF' }} />
                 </div>
 
+                {status === 'error' && (
+                  <p className="text-sm text-red-400 mb-4 text-center">Something went wrong — please email us directly at <a href="mailto:dylanwang.ouro@gmail.com" className="underline">dylanwang.ouro@gmail.com</a></p>
+                )}
                 <button type="submit" disabled={status === 'sending'}
                   className="magnetic-btn btn-shimmer w-full inline-flex items-center justify-center gap-2 text-white py-4 rounded-xl font-semibold shadow-xl shadow-primary/25 disabled:opacity-60 transition-opacity">
                   {status === 'sending' ? (
