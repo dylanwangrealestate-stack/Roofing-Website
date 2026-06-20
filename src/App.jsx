@@ -1057,11 +1057,12 @@ function ContactForm() {
       services: Array.from(form.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value).join(', '),
       message: form.message.value,
     }
+    const formData = new FormData()
+    Object.entries(data).forEach(([k, v]) => formData.append(k, v ?? ''))
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: formData,
       })
       if (res.ok) {
         setStatus('sent')
